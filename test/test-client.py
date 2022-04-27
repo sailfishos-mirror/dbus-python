@@ -180,6 +180,12 @@ class TestDBusBindings(unittest.TestCase):
         print("Delta: %f" % (b - a))
         self.assertTrue(True)
 
+    def testAllowInteractiveAuthorization(self):
+        message = dbus.lowlevel.MethodCallMessage(NAME, OBJECT, IFACE, 'TestAllowInteractiveAuthorization')
+        assert not message.get_allow_interactive_authorization()
+        message.set_allow_interactive_authorization(True)
+        assert message.get_allow_interactive_authorization()
+
     def testNoReply(self):
         failures = []
         report = []
