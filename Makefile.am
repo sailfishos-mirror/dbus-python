@@ -1,3 +1,10 @@
+# Copyright © 2002-2003 CodeFactory AB
+# Copyright © 2002-2010 Red Hat, Inc.
+# Copyright © 2003 James Willcox
+# Copyright © 2006 Marc-Andre Lureau
+# Copyright © 2006-2018 Collabora Ltd.
+# Copyright © 2010-2012 Mike Gorse
+#
 # SPDX-License-Identifier: AFL-2.1 OR GPL-2.0-or-later
 
 EXTRA_DIST = \
