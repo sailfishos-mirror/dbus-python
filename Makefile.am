@@ -28,7 +28,7 @@ noinst_LTLIBRARIES = \
 
 libdbus_gmain_la_SOURCES = \
 	dbus-gmain.c \
-	dbus-gmain.h \
+	dbus-gmain/dbus-gmain.h \
 	$(NULL)
 
 libdbus_gmain_la_LIBADD = $(DBUS_LIBS) $(GLIB_LIBS)
