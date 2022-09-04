@@ -21,13 +21,9 @@ if cc.get_id() != 'msvc'
   compile_warnings += ['-fno-common']
 
   compile_warnings += [
-      # These warnings are intentionally disabled:
-      # - missing field initializers being implicitly 0 is a feature,
-      #   not a bug
-      # - -Wunused-parameter is annoying when writing callbacks that follow
-      #   a fixed signature but do not necessarily need all of its parameters
+      # Intentionally disabled: missing field initializers being implicitly
+      # default-initialized is a feature, not a bug
       '-Wno-missing-field-initializers',
-      '-Wno-unused-parameter',
 
       # General warnings for both C and C++, excluding those that are part
       # of -Wall or -Wextra

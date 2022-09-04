@@ -116,7 +116,7 @@ send_test_message (dbus_bool_t switch_after_send)
 }
 
 int
-main(int argc, const char *argv[])
+main (G_GNUC_UNUSED int argc, G_GNUC_UNUSED const char *argv[])
 {
   DBusError error;
 
