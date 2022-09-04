@@ -560,6 +560,9 @@ class TestMessageMarshalling(unittest.TestCase):
         finally:
             os.close(plain_fd)
 
+        with self.assertRaises(ValueError):
+            types.UnixFd(-1)
+
 class TestMatching(unittest.TestCase):
     def setUp(self):
         from _dbus_bindings import SignalMessage

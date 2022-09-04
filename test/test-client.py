@@ -31,6 +31,7 @@ import unittest
 import time
 import logging
 import weakref
+import sys
 
 import dbus
 import _dbus_bindings
@@ -40,7 +41,7 @@ import dbus.service
 import dbus_test_utils
 
 try:
-    from gi.repository import GLib
+    from gi.repository import GLib, Gio
 except ImportError:
     print('1..0 # SKIP cannot import GLib')
     raise SystemExit(0)
@@ -617,6 +618,59 @@ class TestDBusBindings(unittest.TestCase):
                          'Wanted a traceback but got:\n%s' % str(e))
         else:
             raise AssertionError('Wanted an exception')
+
+    @unittest.skipIf(sys.platform.startswith("win"), "requires Unix")
+    def test_invalid_fd_index(self) -> None:
+        # libdbus cannot call a method containing fd indexes that are
+        # out-of-range for the number of fds attached to the message,
+        # but Gio can.
+        gdbus_conn = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+
+        try:
+            results, fds = gdbus_conn.call_with_unix_fd_list_sync(
+                NAME, OBJECT, IFACE, 'EchoVariant',
+                GLib.Variant('(v)', (GLib.Variant.new_handle(42),)),
+                GLib.VariantType('(v)'),
+                Gio.DBusCallFlags.NONE,
+                -1,
+                Gio.UnixFDList.new(),
+                None,
+            )
+        except GLib.GError as e:
+            self.assertEqual(
+                Gio.dbus_error_get_remote_error(e),
+                'org.freedesktop.DBus.Python.ValueError',
+            )
+            self.assertIn(
+                'invalid file descriptor in message', str(e),
+            )
+        else:
+            raise AssertionError('Wanted an exception')
+
+        plain_fd = os.open('/dev/null', os.O_RDONLY)
+        expected_stat = os.fstat(plain_fd)
+
+        try:
+            # Check that the server can do a similar operation with valid
+            # fds, and has not crashed
+            for i in range(2):
+                fds_in = Gio.UnixFDList.new()
+                self.assertEqual(fds_in.append(plain_fd), 0)
+                results, fds_out = gdbus_conn.call_with_unix_fd_list_sync(
+                    NAME, OBJECT, IFACE, 'EchoVariant',
+                    GLib.Variant('(v)', (GLib.Variant.new_handle(0),)),
+                    GLib.VariantType('(v)'),
+                    Gio.DBusCallFlags.NONE,
+                    -1,
+                    fds_in,
+                    None,
+                )
+                self.assertEqual(results[0], 0)
+                fd = fds_out.peek_fds()[0]
+                actual_stat = os.fstat(fd)
+                self.assertEqual(expected_stat, actual_stat)
+        finally:
+            os.close(plain_fd)
 
 """ Remove this for now
 class TestDBusPythonToGLibBindings(unittest.TestCase):
