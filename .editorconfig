@@ -10,7 +10,7 @@ end_of_line = lf
 insert_final_newline = true
 tab_width = 8
 
-[{*.py,*.sh,meson.build}]
+[{*.py,*.sh,*.yml,meson.build}]
 indent_size = 4
 indent_style = space
 
