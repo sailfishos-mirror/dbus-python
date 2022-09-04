@@ -62,9 +62,9 @@ typedef struct {
 } UnixFdObject;
 
 /* Return values:
- * -2 - the long value overflows an int
+ * -2 - the long value is not plausible as a file descriptor
  * -1 - Python failed producing a long (or in Python 2 an int)
- *  0 - success
+ *  0 - success (value might not *actually* be a fd, but it *could* be)
  *  1 - arg is not a long (or in Python 2 an int)
  *
  * Or to summarize:
@@ -89,7 +89,7 @@ make_fd(PyObject *arg, int *fd)
         return 1;
     }
     /* Check for int overflow. */
-    if (fd_arg < INT_MIN || fd_arg > INT_MAX) {
+    if (fd_arg < 0 || fd_arg > INT_MAX) {
         PyErr_Format(PyExc_ValueError, "int is outside fd range");
         return -2;
     }
