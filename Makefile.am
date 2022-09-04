@@ -44,6 +44,7 @@ AM_CPPFLAGS = \
 	-include config.h \
 	-I$(top_srcdir)/include \
 	-I$(top_srcdir)/subprojects \
+	-I$(top_srcdir)/subprojects/dbus-gmain \
 	$(DBUS_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(PYTHON_CPPFLAGS) \
