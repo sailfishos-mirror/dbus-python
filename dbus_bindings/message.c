@@ -358,6 +358,30 @@ Message_set_no_reply(Message *self, PyObject *args)
     Py_RETURN_NONE;
 }
 
+PyDoc_STRVAR(Message_get_allow_interactive_authorization__doc__,
+"message.get_allow_interactive_authorization(bool) -> None\n"
+"Get allow interactive authorization flag.\n");
+static PyObject *
+Message_get_allow_interactive_authorization(Message *self, PyObject *unused UNUSED)
+{
+    if (!self->msg) return DBusPy_RaiseUnusableMessage();
+    return PyBool_FromLong(dbus_message_get_allow_interactive_authorization(self->msg));
+}
+
+
+PyDoc_STRVAR(Message_set_allow_interactive_authorization__doc__,
+"message.set_allow_interactive_authorization(bool) -> None\n"
+"Set allow interactive authorization flag to this message.\n");
+static PyObject *
+Message_set_allow_interactive_authorization(Message *self, PyObject *args)
+{
+    int value;
+    if (!PyArg_ParseTuple(args, "i", &value)) return NULL;
+    if (!self->msg) return DBusPy_RaiseUnusableMessage();
+    dbus_message_set_allow_interactive_authorization(self->msg, value ? TRUE : FALSE);
+    Py_RETURN_NONE;
+}
+
 PyDoc_STRVAR(Message_get_reply_serial__doc__,
 "message.get_reply_serial() -> long\n"
 "Returns the serial that the message is a reply to or 0 if none.\n");
@@ -837,6 +861,10 @@ static PyMethodDef Message_tp_methods[] = {
       METH_NOARGS, Message_get_no_reply__doc__},
     {"set_no_reply", (PyCFunction) (void (*)(void))Message_set_no_reply,
       METH_VARARGS, Message_set_no_reply__doc__},
+    {"get_allow_interactive_authorization", (PyCFunction) (void (*)(void))Message_get_allow_interactive_authorization,
+    METH_NOARGS, Message_get_allow_interactive_authorization__doc__},
+    {"set_allow_interactive_authorization", (PyCFunction) (void (*)(void))Message_set_allow_interactive_authorization,
+    METH_VARARGS, Message_set_allow_interactive_authorization__doc__},
     {"get_reply_serial", (PyCFunction) (void (*)(void))Message_get_reply_serial,
       METH_NOARGS, Message_get_reply_serial__doc__},
     {"set_reply_serial", (PyCFunction) (void (*)(void))Message_set_reply_serial,
