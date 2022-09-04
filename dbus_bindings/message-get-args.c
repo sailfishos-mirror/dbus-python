@@ -307,7 +307,15 @@ _message_iter_get_pyobject(DBusMessageIter *iter,
 #ifdef DBUS_TYPE_UNIX_FD
         case DBUS_TYPE_UNIX_FD:
             DBG("%s", "found an unix fd");
+            /* Note that this can return an invalid fd (less than 0) if the
+             * sender has included an index numerically greater than the
+             * number of fds that were attached out-of-band to the message.
+             * libdbus cannot send messages like this, but GDBus can. */
             dbus_message_iter_get_basic(iter, &u.fd);
+            if (u.fd < 0) {
+                PyErr_Format(PyExc_ValueError, "invalid file descriptor in message");
+                break;
+            }
             args = Py_BuildValue("(i)", u.fd);
             if (args) {
                 ret = PyObject_Call((PyObject *)&DBusPyUnixFd_Type, args,
