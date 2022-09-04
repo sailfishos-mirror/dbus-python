@@ -159,7 +159,7 @@ AH_BOTTOM([
 
 AC_CONFIG_FILES([
   Makefile
-  dbus-gmain/Makefile
   dbus-python.pc
+  subprojects/dbus-gmain/Makefile
 ])
 AC_OUTPUT

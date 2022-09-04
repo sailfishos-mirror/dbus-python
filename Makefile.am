@@ -7,7 +7,7 @@ installed_test_metadir = ${datadir}/installed-tests/${PACKAGE_TARNAME}
 AM_DISTCHECK_CONFIGURE_FLAGS = PYTHON=$(PYTHON) --with-python-prefix='$${prefix}' --with-python-exec-prefix='$${exec_prefix}'
 
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = dbus-gmain .
+SUBDIRS = subprojects/dbus-gmain .
 
 CLEANFILES = \
 	test/test-service.log \
@@ -43,6 +43,7 @@ EXTRA_DIST = \
 AM_CPPFLAGS = \
 	-include config.h \
 	-I$(top_srcdir)/include \
+	-I$(top_srcdir)/subprojects \
 	$(DBUS_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(PYTHON_CPPFLAGS) \
@@ -125,8 +126,8 @@ _dbus_bindings_la_SOURCES = \
 	dbus_bindings/validation.c \
 	$(NULL)
 
-dbus-gmain/libdbus-gmain.la:
-	$(MAKE) -C dbus-gmain
+subprojects/dbus-gmain/libdbus-gmain.la:
+	$(MAKE) -C subprojects/dbus-gmain
 
 _dbus_glib_bindings_la_LDFLAGS = \
 	$(pymod_ldflags) \
@@ -134,7 +135,7 @@ _dbus_glib_bindings_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 _dbus_glib_bindings_la_LIBADD = \
-	dbus-gmain/libdbus-gmain.la \
+	subprojects/dbus-gmain/libdbus-gmain.la \
 	$(pymod_libadd) \
 	$(DBUS_LIBS) \
 	$(NULL)

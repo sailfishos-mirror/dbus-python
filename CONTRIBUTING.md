@@ -136,7 +136,8 @@ branch.
 
 The `dbus-gmain` subproject is shared by `dbus-python` and `dbus-glib`,
 and has its own contributing guidelines (which are similar to these).
-Please see [dbus-gmain/CONTRIBUTING.md](dbus-gmain/CONTRIBUTING.md)
+Please see
+[subprojects/dbus-gmain/CONTRIBUTING.md](subprojects/dbus-gmain/CONTRIBUTING.md)
 for details.
 
 ## Information for maintainers
@@ -150,7 +151,7 @@ a checkout of the `dbus-gmain` branch of the
 [dbus-glib](https://gitlab.freedesktop.org/dbus/dbus-glib) repository in
 the `../dbus-gmain` directory:
 
-    git subtree pull -P dbus-gmain ../dbus-gmain HEAD
+    git subtree pull -P subprojects/dbus-gmain ../dbus-gmain HEAD
 
 ### Committing other people's patches
 

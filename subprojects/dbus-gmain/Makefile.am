@@ -9,7 +9,9 @@ EXTRA_DIST = \
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
+	-I$(top_srcdir)/subprojects \
 	-I$(top_builddir) \
+	-I$(top_builddir)/subprojects \
 	$(DBUS_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(NULL)
