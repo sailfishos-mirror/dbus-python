@@ -1,4 +1,4 @@
-# Copyright © 2015-2019 Collabora Ltd.
+# Copyright © 2015-2022 Collabora Ltd.
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -20,7 +20,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-image: debian:buster-slim
+image: debian:bookworm-slim
 
 stages:
   - build
@@ -34,7 +34,7 @@ variables:
   ci_parallel: "2"
   ci_sudo: "yes"
   ci_distro: "debian"
-  ci_suite: "buster"
+  ci_suite: "bookworm"
 
 build:python3.5:
   stage: build
@@ -56,12 +56,14 @@ build:python3.5-dbg:
 
 build:python3.7:
   stage: build
+  image: "debian:buster-slim"
   variables:
     dbus_ci_system_python: python3
   script: *script
 
 build:python3.7-dbg:
   stage: build
+  image: "debian:buster-slim"
   variables:
     dbus_ci_system_python: python3-dbg
   script: *script
@@ -85,13 +87,19 @@ build:python3.9-dbg:
 
 build:python3.10:
   stage: build
-  image: "ubuntu:impish"
+  image: "debian:bookworm-slim"
   variables:
-    ci_distro: ubuntu
-    ci_suite: impish
+    ci_suite: bookworm
     dbus_ci_system_python: python3.10
-    dbus_ci_configure_flags: --disable-documentation
-    DISTCHECK_CONFIGURE_FLAGS: --disable-documentation
+  script: *script
+
+build:python3.10-dbg:
+  stage: build
+  image: "debian:bookworm-slim"
+  variables:
+    ci_suite: bookworm
+    dbus_ci_system_python: python3.10-dbg
+    dbus_ci_system_python_module_suffix: -dbg
   script: *script
 
 # vim:set sw=2 sts=2 et:
