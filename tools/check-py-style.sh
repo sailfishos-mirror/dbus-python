@@ -1,4 +1,6 @@
 #!/bin/sh
+# Copyright 2006-2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
 fail=0
 
 /bin/sh "${top_srcdir}"/tools/check-whitespace.sh "$@" || fail=$?

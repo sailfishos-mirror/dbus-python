@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# Copyright 2012 Michael Vogt
+# Copyright 2016-2020 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 
 import unittest

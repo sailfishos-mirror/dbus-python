@@ -1,0 +1,31 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: dbus-python
+Upstream-Contact: https://gitlab.freedesktop.org/dbus/dbus-python/-/issues
+Source: https://gitlab.freedesktop.org/dbus/dbus-python
+
+Files:
+ AUTHORS
+ ChangeLog
+ CONTRIBUTING.md
+ NEWS
+ README
+ doc/*
+ test/TestSuitePythonService.service.in
+ test/tmp-session-bus.conf.in
+Copyright:
+ 2006-2022 Collabora Ltd.
+ 2006-2007 Red Hat, Inc.
+ 2012 Barry Warsaw
+ 2008-2019 Wayland contributors
+License: MIT
+
+Files: m4/ax_python_devel.m4
+Copyright:
+ 2009 Sebastian Huber
+ 2009 Alan W. Irwin
+ 2009 Rafael Laboissiere
+ 2009 Andrew Collier
+ 2009 Matteo Settenvini
+ 2009 Horst Knorr
+ 2013 Daniel Mullner
+License: GPL-3.0-or-later WITH LicenseRef-AutoconfArchiveException

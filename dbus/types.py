@@ -1,3 +1,5 @@
+# Copyright 2006-2021 Collabora Ltd.
+# Copyright 2011 Barry Warsaw
 # SPDX-License-Identifier: MIT
 
 __all__ = ['ObjectPath', 'ByteArray', 'Signature', 'Byte', 'Boolean',

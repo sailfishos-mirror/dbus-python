@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Copyright 2008 Mathias Hasselmann and/or Openismus
+# Copyright 2008-2016 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 
 from dbus.mainloop.glib import DBusGMainLoop

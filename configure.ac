@@ -1,5 +1,7 @@
 -*- mode: m4 -*-
 AC_PREREQ(2.59c)
+# Copyright 2006-2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
 
 dnl The dbus-python version number
 m4_define(dbus_python_major_version, 1)

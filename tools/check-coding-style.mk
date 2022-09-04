@@ -1,3 +1,5 @@
+# Copyright 2006-2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
 check-local::
 	@fail=0; \
 	cd $(srcdir) || exit $$?; \

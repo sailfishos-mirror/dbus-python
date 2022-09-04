@@ -1,5 +1,8 @@
 /* Regression test for https://bugs.freedesktop.org/show_bug.cgi?id=23831 */
-/* SPDX-License-Identifier: MIT */
+/*
+ * Copyright 2010-2016 Collabora Ltd.
+ * SPDX-License-Identifier: MIT
+ */
 
 #include <stdio.h>
 

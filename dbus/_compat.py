@@ -1,4 +1,6 @@
 # Python 2 / Python 3 compatibility helpers.
+# Copyright 2011 Barry Warsaw
+# Copyright 2021 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 
 import sys

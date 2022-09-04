@@ -1,3 +1,6 @@
+# Copyright 2006-2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
+
 abs_top_srcdir = @abs_top_srcdir@
 abs_top_builddir = @abs_top_builddir@
 installed_testdir = ${libexecdir}/installed-tests/${PACKAGE_TARNAME}
@@ -13,9 +16,13 @@ CLEANFILES = \
 	test/test-service.log \
 	$(NULL)
 EXTRA_DIST = \
+	.reuse/dep5 \
 	AUTHORS \
 	CONTRIBUTING.md \
 	COPYING \
+	LICENSES/GPL-3.0-or-later.txt \
+	LICENSES/LicenseRef-AutoconfArchiveException.txt \
+	LICENSES/MIT.txt \
 	dbus-python.pc.in \
 	doc/_static/.gitignore \
 	examples/example-async-client.py \

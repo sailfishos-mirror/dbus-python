@@ -1,4 +1,8 @@
 #!/bin/sh
+# Copyright 2006-2022 Collabora Ltd.
+# Copyright 2016 GNOME wiki contributors
+# SPDX-License-Identifier: MIT
+
 # Run this to generate all the initial makefiles, etc.
 test -n "$srcdir" || srcdir=$(dirname "$0")
 test -n "$srcdir" || srcdir=.

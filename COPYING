@@ -1,3 +1,7 @@
+This project's licensing is REUSE-compliant <https://reuse.software/>.
+See individual files for full details of copyright and licensing,
+and see LICENSES/*.txt for the license text.
+
 As of version 0.82.4, dbus-python itself is released under the following
 permissive non-copyleft license (the same one that was proposed for
 D-Bus core but wasn't achieved):

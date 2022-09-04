@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+# Copyright 2018-2019 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 
 import os
