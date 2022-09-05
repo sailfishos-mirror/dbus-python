@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copyright © 2016 Simon McVittie
 #
@@ -29,7 +29,6 @@ set -x
 
 NULL=
 srcdir="$(pwd)"
-builddir="$(mktemp -d -t "builddir.XXXXXX")"
 prefix="$(mktemp -d -t "prefix.XXXXXX")"
 
 if [ -z "$dbus_ci_parallel" ]; then
@@ -64,7 +63,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 e=0
 (
-	cd "$builddir" && "${srcdir}/configure" \
+	mkdir _autotools && cd _autotools && "${srcdir}/configure" \
 		--enable-installed-tests \
 		--prefix="$prefix" \
 		--with-python-prefix='${prefix}' \
@@ -73,16 +72,16 @@ e=0
 		${NULL}
 ) || e=1
 if [ "x$e" != x0 ]; then
-	cat "$builddir/config.log"
+	cat "_autotools/config.log"
 fi
 test "x$e" = x0
 
 make="make -j${dbus_ci_parallel} V=1 VERBOSE=1"
 
-$make -C "$builddir"
-$make -C "$builddir" check
-$make -C "$builddir" distcheck
-$make -C "$builddir" install
+$make -C _autotools
+$make -C _autotools check
+$make -C _autotools distcheck
+$make -C _autotools install
 ( cd "$prefix" && find . -ls )
 
 dbus_ci_pyversion="$(${PYTHON:-python3} -c 'import sysconfig; print(sysconfig.get_config_var("VERSION"))')"

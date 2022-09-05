@@ -37,15 +37,24 @@ variables:
   ci_distro: "debian"
   ci_suite: "bookworm"
 
+.common:
+  script: &script
+    - chown -R user .
+    - runuser -u user -- env PATH="/usr/lib/ccache:$PATH" ./tools/ci-build.sh $dbus_ci_configure_flags
+  artifacts: &artifacts
+    paths:
+      - _autotools/*.log
+      - _meson-build/meson-logs/*.txt
+    when: always
+
 build:python3.5:
   stage: build
   image: "debian:stretch-slim"
   variables:
     ci_suite: stretch
     dbus_ci_system_python: python3
-  script: &script
-    - chown -R user .
-    - runuser -u user -- env PATH="/usr/lib/ccache:$PATH" ./tools/ci-build.sh $dbus_ci_configure_flags
+  script: *script
+  artifacts: *artifacts
 
 build:python3.5-dbg:
   stage: build
@@ -62,6 +71,7 @@ build:python3.7:
     ci_suite: buster
     dbus_ci_system_python: python3
   script: *script
+  artifacts: *artifacts
 
 build:python3.7-dbg:
   stage: build
@@ -70,6 +80,7 @@ build:python3.7-dbg:
     ci_suite: buster
     dbus_ci_system_python: python3-dbg
   script: *script
+  artifacts: *artifacts
 
 build:python3.9:
   stage: build
@@ -78,6 +89,7 @@ build:python3.9:
     ci_suite: bullseye
     dbus_ci_system_python: python3.9
   script: *script
+  artifacts: *artifacts
 
 build:python3.9-dbg:
   stage: build
@@ -87,6 +99,7 @@ build:python3.9-dbg:
     dbus_ci_system_python: python3.9-dbg
     dbus_ci_system_python_module_suffix: -dbg
   script: *script
+  artifacts: *artifacts
 
 build:python3.10:
   stage: build
@@ -95,6 +108,7 @@ build:python3.10:
     ci_suite: bookworm
     dbus_ci_system_python: python3.10
   script: *script
+  artifacts: *artifacts
 
 build:python3.10-dbg:
   stage: build
@@ -104,5 +118,6 @@ build:python3.10-dbg:
     dbus_ci_system_python: python3.10-dbg
     dbus_ci_system_python_module_suffix: -dbg
   script: *script
+  artifacts: *artifacts
 
 # vim:set sw=2 sts=2 et:
