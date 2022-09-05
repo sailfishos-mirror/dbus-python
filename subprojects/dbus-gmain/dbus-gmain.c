@@ -73,15 +73,15 @@ message_queue_prepare (GSource *source,
 }
 
 static gboolean
-message_queue_check (GSource *source)
+message_queue_check (G_GNUC_UNUSED GSource *source)
 {
   return FALSE;
 }
 
 static gboolean
-message_queue_dispatch (GSource     *source,
-                        GSourceFunc  callback,
-                        gpointer     user_data)
+message_queue_dispatch (GSource                   *source,
+                        G_GNUC_UNUSED GSourceFunc  callback,
+                        G_GNUC_UNUSED gpointer     user_data)
 {
   DBusConnection *connection = ((DBusGMessageQueue *)source)->connection;
 
@@ -191,9 +191,9 @@ io_handler_watch_freed (void *data)
 }
 
 static gboolean
-io_handler_dispatch (GIOChannel   *source,
-                     GIOCondition  condition,
-                     gpointer      data)
+io_handler_dispatch (G_GNUC_UNUSED GIOChannel   *source,
+                     GIOCondition                condition,
+                     gpointer                    data)
 {
   IOHandler *handler;
   guint dbus_condition = 0;
@@ -258,8 +258,9 @@ connection_setup_add_watch (ConnectionSetup *cs,
   channel = g_io_channel_unix_new (dbus_watch_get_unix_fd (watch));
 
   handler->source = g_io_create_watch (channel, condition);
-  g_source_set_callback (handler->source, (GSourceFunc) io_handler_dispatch, handler,
-                         io_handler_source_finalized);
+  g_source_set_callback (handler->source,
+                         (GSourceFunc) (void (*) (void)) io_handler_dispatch,
+                         handler, io_handler_source_finalized);
   g_source_attach (handler->source, cs->context);
 
   cs->ios = g_slist_prepend (cs->ios, handler);
@@ -360,8 +361,8 @@ connection_setup_add_timeout (ConnectionSetup *cs,
 }
 
 static void
-connection_setup_remove_timeout (ConnectionSetup *cs,
-                                 DBusTimeout       *timeout)
+connection_setup_remove_timeout (G_GNUC_UNUSED ConnectionSetup *cs,
+                                 DBusTimeout                   *timeout)
 {
   TimeoutHandler *handler;
 

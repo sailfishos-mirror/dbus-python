@@ -1,0 +1,34 @@
+# Copyright © 2015-2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
+
+image: debian:bullseye-slim
+
+stages:
+    - build
+
+build:
+    stage: build
+    image: "debian:bullseye-slim"
+    script:
+        - |
+            apt-get -y update
+            apt-get -y install \
+                build-essential \
+                dbus-daemon \
+                libdbus-1-dev \
+                libglib2.0-dev \
+                meson \
+                pkg-config \
+                python3 \
+                ${NULL+}
+            meson _build
+            meson compile -C _build -v
+            meson test -C _build -v
+
+reuse:
+    stage: build
+    image:
+        name: fsfe/reuse:latest
+        entrypoint: [""]
+    script:
+        - reuse lint

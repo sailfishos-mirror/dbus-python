@@ -1,10 +1,27 @@
+# Copyright © 2002-2003 CodeFactory AB
+# Copyright © 2002-2010 Red Hat, Inc.
+# Copyright © 2003 James Willcox
+# Copyright © 2006 Marc-Andre Lureau
+# Copyright © 2006-2018 Collabora Ltd.
+# Copyright © 2010-2012 Mike Gorse
+#
 # SPDX-License-Identifier: AFL-2.1 OR GPL-2.0-or-later
 
 EXTRA_DIST = \
 	AUTHORS \
 	CONTRIBUTING.md \
 	COPYING \
+	LICENSES/AFL-2.1.txt \
+	LICENSES/GPL-2.0-or-later.txt \
+	LICENSES/MIT.txt \
 	README.md \
+	meson.build \
+	meson_options.txt \
+	tests/meson.build \
+	tests/use-as-subproject.py \
+	tests/use-as-subproject/README \
+	tests/use-as-subproject/meson.build \
+	tests/use-as-subproject/use-dbus-gmain.c \
 	$(NULL)
 
 AM_CPPFLAGS = \
@@ -23,7 +40,7 @@ noinst_LTLIBRARIES = \
 
 libdbus_gmain_la_SOURCES = \
 	dbus-gmain.c \
-	dbus-gmain.h \
+	dbus-gmain/dbus-gmain.h \
 	$(NULL)
 
 libdbus_gmain_la_LIBADD = $(DBUS_LIBS) $(GLIB_LIBS)

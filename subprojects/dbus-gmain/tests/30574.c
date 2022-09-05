@@ -54,11 +54,13 @@ set_reply (DBusPendingCall * pending, void *user_data)
 }
 
 static DBusMessage *
-send_and_allow_reentry (DBusConnection * bus, DBusMessage * message,
+send_and_allow_reentry (DBusConnection *conn, DBusMessage *message,
                         dbus_bool_t switch_after_send)
 {
   DBusPendingCall *pending;
   SpiReentrantCallClosure closure;
+
+  g_assert (conn == bus);
 
   closure.loop = g_main_loop_new (main_context, FALSE);
   DBUS_GMAIN_FUNCTION_NAME (set_up_connection) (bus,
@@ -114,7 +116,7 @@ send_test_message (dbus_bool_t switch_after_send)
 }
 
 int
-main(int argc, const char *argv[])
+main (G_GNUC_UNUSED int argc, G_GNUC_UNUSED const char *argv[])
 {
   DBusError error;
 

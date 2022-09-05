@@ -158,7 +158,7 @@ filter_test_message (DBusConnection     *connection,
 static DBusHandlerResult
 filter_disconnect (DBusConnection     *connection,
                    DBusMessage        *message,
-                   void               *user_data)
+                   G_GNUC_UNUSED void *user_data)
 {
   if (!dbus_message_is_signal (message, DBUS_INTERFACE_LOCAL,
                                "Disconnected"))
@@ -171,9 +171,9 @@ filter_disconnect (DBusConnection     *connection,
 }
 
 static void
-new_connection_callback (DBusServer     *server,
-                         DBusConnection *new_connection,
-                         void           *user_data)
+new_connection_callback (G_GNUC_UNUSED DBusServer *server,
+                         DBusConnection           *new_connection,
+                         G_GNUC_UNUSED void       *user_data)
 {
   ThreadTestData * data;
 

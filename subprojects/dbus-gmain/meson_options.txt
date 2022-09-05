@@ -1,0 +1,23 @@
+# Copyright 2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
+
+option(
+    'redefine_function_declaration',
+    type: 'string',
+    value: 'G_GNUC_INTERNAL ret DBUS_GMAIN_FUNCTION_NAME (name) (__VA_ARGS__)',
+    description: 'Redefinition of DBUS_GMAIN_FUNCTION(ret, name, ...)',
+)
+
+option(
+    'redefine_function_name',
+    type: 'string',
+    value: 'dbus_gmain_ ## name',
+    description: 'Redefinition of DBUS_GMAIN_FUNCTION_NAME(name)',
+)
+
+option(
+    'tests',
+    type: 'boolean',
+    value: true,
+    description: 'Enable unit tests',
+)
