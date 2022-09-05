@@ -98,7 +98,6 @@ setup(
         'Development Status :: 7 - Inactive',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: C',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Software Development :: Object Brokering',
