@@ -59,6 +59,8 @@ if [ -n "$dbus_ci_system_python" ]; then
 	export PYTHON="$(command -v "$dbus_ci_system_python")"
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
+
 NOCONFIGURE=1 ./autogen.sh
 
 e=0
@@ -91,9 +93,41 @@ $make -C _autotools install
 	gnome-desktop-testing-runner dbus-python
 )
 
+# Do a Meson build from the Autotools dist tarball, to check that can work
+mkdir _meson-source
+tar -C _meson-source --strip-components=1 -xf _autotools/dbus-python-*.tar.gz
+meson setup \
+	--prefix="$prefix" \
+	-Ddoc=true \
+	-Dinstalled_tests=true \
+	-Dpython="${PYTHON:-python3}" \
+	_meson-source _meson-build
+meson compile -C _meson-build
+meson test -C _meson-build
+rm -fr "$prefix"
+meson install -C _meson-build
+( cd "$prefix" && find . -ls )
+
+case "${PYTHON:-python3}" in
+	(*3.[0-8]-dbg)
+		# -dbg builds with Meson don't set the right ABI suffix in older Pythons
+		test_meson=
+		;;
+	(*)
+		test_meson=yes
+		;;
+esac
+
+if [ -n "$test_meson" ]; then (
+	dbus_ci_pyversion="$(${PYTHON:-python3} -c 'import sysconfig; print(sysconfig.get_config_var("VERSION"))')"
+	export PYTHONPATH="$prefix/lib/python$dbus_ci_pyversion/site-packages:$prefix/lib/python3/dist-packages:$PYTHONPATH"
+	export XDG_DATA_DIRS="$prefix/share:/usr/local/share:/usr/share"
+	gnome-desktop-testing-runner dbus-python
+); fi
+
 # re-run the tests with dbus-python only installed via pip
 ${PYTHON:-python3} -m virtualenv --python="${PYTHON:-python3}" _venv
-(
+if [ -n "$test_meson" ]; then (
 	. _venv/bin/activate
 	export PYTHON="$(pwd)/_venv/bin/python3"
 	"$PYTHON" -m pip install -vvv _autotools/dbus-python-*.tar.gz
@@ -106,4 +140,4 @@ ${PYTHON:-python3} -m virtualenv --python="${PYTHON:-python3}" _venv
 	rm -f "$prefix/venv-meta/installed-tests/dbus-python/test-import-repeatedly.test"
 	export XDG_DATA_DIRS="$prefix/venv-meta:/usr/local/share:/usr/share"
 	gnome-desktop-testing-runner dbus-python
-)
+); fi

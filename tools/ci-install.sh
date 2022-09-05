@@ -32,7 +32,7 @@ NULL=
 # ci_distro:
 # OS distribution in which we are testing
 # Typical values: ubuntu, debian; maybe fedora in future
-: "${ci_distro:=ubuntu}"
+: "${ci_distro:=debian}"
 
 # ci_docker:
 # If non-empty, this is the name of a Docker image. ci-install.sh will
@@ -54,7 +54,7 @@ NULL=
 # OS suite (release, branch) in which we are testing.
 # Typical values for ci_distro=debian: sid, buster
 # Typical values for ci_distro=fedora might be 25, rawhide
-: "${ci_suite:=xenial}"
+: "${ci_suite:=bookworm}"
 
 if [ $(id -u) = 0 ]; then
     sudo=
@@ -62,6 +62,7 @@ else
     sudo=sudo
 fi
 
+have_system_meson=
 have_system_sphinx=
 have_system_tappy=
 
@@ -106,7 +107,6 @@ case "$ci_distro" in
             automake \
             autotools-dev \
             ccache \
-            dbus \
             debhelper \
             dh-autoreconf \
             docbook-xml \
@@ -118,6 +118,7 @@ case "$ci_distro" in
             libtool \
             make \
             sudo \
+            virtualenv \
             wget \
             xmlto \
             ${NULL}
@@ -130,24 +131,11 @@ case "$ci_distro" in
                 python3-gi${dbus_ci_system_python_module_suffix} \
                 python3-pip \
                 python3-setuptools \
+                python3-tap \
                 ${NULL}
 
-            if [ "$dbus_ci_system_python" = python ]; then
-                sudo apt-get -qq -y install python-gobject-2
-            fi
-
             case "$ci_suite" in
-                (jessie|xenial)
-                    ;;
-
-                (*)
-                    $sudo apt-get -qq -y install python3-tap
-                    have_system_tappy=yes
-                    ;;
-            esac
-
-            case "$ci_suite" in
-                (jessie|xenial|stretch|bionic)
+                (stretch|bionic)
                     ;;
 
                 (*)
@@ -169,12 +157,22 @@ case "$ci_distro" in
         fi
 
         case "$ci_suite" in
-            (xenial)
-                # autoconf-archive in Ubuntu 16.04 is too old, use the one
-                # from Debian 9 instead
-                wget http://deb.debian.org/debian/pool/main/a/autoconf-archive/autoconf-archive_20160916-1_all.deb
-                $sudo dpkg -i autoconf-archive_*_all.deb
-                rm autoconf-archive_*_all.deb
+            (stretch|bionic|buster|focal|bullseye)
+                $sudo apt-get -qq -y install dbus
+                ;;
+
+            (*)
+                $sudo apt-get -qq -y install dbus-daemon
+                ;;
+        esac
+
+        case "$ci_suite" in
+            (stretch|bionic|buster|focal)
+                ;;
+
+            (*)
+                $sudo apt-get -qq -y install meson
+                have_system_meson=true
                 ;;
         esac
         ;;
@@ -185,32 +183,33 @@ case "$ci_distro" in
         ;;
 esac
 
+if [ -n "$have_system_meson" ]; then
+    :
+elif [ -n "${dbus_ci_system_python-}" ]; then
+    case "$ci_suite" in
+        (stretch|xenial|bionic)
+            # 0.56.2 is the last version that supported Python 3.5
+            runuser -u user -- "$dbus_ci_system_python" -m pip install --user meson==0.56.2 ninja
+            ;;
+        (*)
+            runuser -u user -- "$dbus_ci_system_python" -m pip install --user meson ninja
+            ;;
+    esac
+else
+    runuser -u user -- pip install meson ninja
+fi
+
 if [ -n "$have_system_sphinx" ]; then
     :
 elif [ -n "${dbus_ci_system_python-}" ]; then
-    "$dbus_ci_system_python" -m pip install --user \
+    runuser -u user -- "$dbus_ci_system_python" -m pip install --user \
         sphinx \
         sphinx_rtd_theme \
         ${NULL}
 else
-    pip install \
+    runuser -u user -- pip install \
         sphinx \
         sphinx_rtd_theme \
-        ${NULL}
-fi
-
-if [ -n "$have_system_tappy" ]; then
-    :
-elif "${PYTHON:-${dbus_ci_system_python-false}}" -c 'import sys; exit(sys.version_info[0] > 2)'; then
-    # Don't install tap.py for Python 2
-    :
-elif [ -n "${dbus_ci_system_python-}" ]; then
-    "$dbus_ci_system_python" -m pip install --user \
-        tap.py \
-        ${NULL}
-else
-    pip install \
-        tap.py \
         ${NULL}
 fi
 

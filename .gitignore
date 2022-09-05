@@ -14,6 +14,8 @@
 .dirstamp
 .libs/
 /_autotools/
+/_meson-build/
+/_meson-source/
 /INSTALL
 /aclocal.m4
 /api/

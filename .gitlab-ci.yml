@@ -44,7 +44,6 @@ variables:
   artifacts: &artifacts
     paths:
       - _autotools/*.log
-      - _meson-build/meson-logs/*.txt
     when: always
 
 build:python3.5:
