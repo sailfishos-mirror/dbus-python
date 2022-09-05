@@ -46,15 +46,6 @@ variables:
       - _autotools/*.log
     when: always
 
-build:python3.5:
-  stage: build
-  image: "debian:stretch-slim"
-  variables:
-    ci_suite: stretch
-    dbus_ci_system_python: python3
-  script: *script
-  artifacts: *artifacts
-
 build:python3.7:
   stage: build
   image: "debian:buster-slim"

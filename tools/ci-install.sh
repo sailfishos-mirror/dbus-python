@@ -63,8 +63,6 @@ else
 fi
 
 have_system_meson=
-have_system_sphinx=
-have_system_tappy=
 
 if [ -n "$ci_docker" ]; then
     sed \
@@ -131,21 +129,10 @@ case "$ci_distro" in
                 python3-gi${dbus_ci_system_python_module_suffix} \
                 python3-pip \
                 python3-setuptools \
+                python3-sphinx \
+                python3-sphinx-rtd-theme \
                 python3-tap \
                 ${NULL}
-
-            case "$ci_suite" in
-                (stretch|bionic)
-                    ;;
-
-                (*)
-                    $sudo apt-get -qq -y install \
-                        python3-sphinx \
-                        python3-sphinx-rtd-theme \
-                        ${NULL}
-                    have_system_sphinx=yes
-                    ;;
-            esac
         fi
 
         if [ "$ci_in_docker" = yes ]; then
@@ -157,7 +144,7 @@ case "$ci_distro" in
         fi
 
         case "$ci_suite" in
-            (stretch|bionic|buster|focal|bullseye)
+            (buster|focal|bullseye)
                 $sudo apt-get -qq -y install dbus
                 ;;
 
@@ -167,7 +154,7 @@ case "$ci_distro" in
         esac
 
         case "$ci_suite" in
-            (stretch|bionic|buster|focal)
+            (buster|focal)
                 ;;
 
             (*)
@@ -186,31 +173,9 @@ esac
 if [ -n "$have_system_meson" ]; then
     :
 elif [ -n "${dbus_ci_system_python-}" ]; then
-    case "$ci_suite" in
-        (stretch|xenial|bionic)
-            # 0.56.2 is the last version that supported Python 3.5
-            runuser -u user -- "$dbus_ci_system_python" -m pip install --user meson==0.56.2 ninja
-            ;;
-        (*)
-            runuser -u user -- "$dbus_ci_system_python" -m pip install --user meson ninja
-            ;;
-    esac
+    runuser -u user -- "$dbus_ci_system_python" -m pip install --user meson ninja
 else
     runuser -u user -- pip install meson ninja
-fi
-
-if [ -n "$have_system_sphinx" ]; then
-    :
-elif [ -n "${dbus_ci_system_python-}" ]; then
-    runuser -u user -- "$dbus_ci_system_python" -m pip install --user \
-        sphinx \
-        sphinx_rtd_theme \
-        ${NULL}
-else
-    runuser -u user -- pip install \
-        sphinx \
-        sphinx_rtd_theme \
-        ${NULL}
 fi
 
 # vim:set sw=4 sts=4 et:

@@ -33,41 +33,83 @@ import os
 import subprocess
 import sys
 
+
+if (
+    os.environ.get('DBUS_PYTHON_USE_AUTOTOOLS', '')
+    or sys.version_info < (3, 7)
+):
+    use_autotools = True
+    setup_requires = ['setuptools', 'wheel']
+else:
+    use_autotools = False
+    setup_requires = ['meson>=0.60.0', 'ninja', 'setuptools', 'wheel']
+
 if os.path.exists('.version'):
     version = open('.version').read().strip()
-else:
+elif use_autotools:
     version = subprocess.check_output(['autoconf', '--trace', 'AC_INIT:$2',
         'configure.ac']).decode('utf-8').strip()
+else:
+    with open('meson.build') as reader:
+        for line in reader:
+            if line.strip().replace(' ', '').startswith('version:'):
+                version = line.split(':', 1)[1]
+                version = version.replace(',', '')
+                version = version.replace('"', '')
+                version = version.replace("'", '')
+                break
+        else:
+            raise AssertionError('Cannot find version in meson.build')
 
 class Build(Distribution().get_command_class('build')):
-    """Dummy version of distutils build which runs an Autotools build system
-    instead.
+    """Dummy version of distutils build which runs an Autotools or Meson
+    build system instead.
     """
 
     def run(self):
         srcdir = os.getcwd()
         builddir = os.path.join(srcdir, self.build_temp)
-        configure = os.path.join(srcdir, 'configure')
         mkpath(builddir)
 
-        if not os.path.exists(configure):
-            configure = os.path.join(srcdir, 'autogen.sh')
+        if use_autotools:
+            configure = os.path.join(srcdir, 'configure')
 
-        subprocess.check_call([
-                configure,
-                '--disable-maintainer-mode',
-                'PYTHON=' + sys.executable,
-                # Put the documentation, etc. out of the way: we only want
-                # the Python code and extensions
-                '--prefix=' + os.path.join(builddir, 'prefix'),
-            ],
-            cwd=builddir)
-        make_args = [
-            'pythondir=' + os.path.join(srcdir, self.build_lib),
-            'pyexecdir=' + os.path.join(srcdir, self.build_lib),
-        ]
-        subprocess.check_call(['make', '-C', builddir] + make_args)
-        subprocess.check_call(['make', '-C', builddir, 'install'] + make_args)
+            if not os.path.exists(configure):
+                configure = os.path.join(srcdir, 'autogen.sh')
+
+            subprocess.check_call([
+                    configure,
+                    '--disable-maintainer-mode',
+                    'PYTHON=' + sys.executable,
+                    # Put the documentation, etc. out of the way: we only want
+                    # the Python code and extensions
+                    '--prefix=' + os.path.join(builddir, 'prefix'),
+                ],
+                cwd=builddir)
+            make_args = [
+                'pythondir=' + os.path.join(srcdir, self.build_lib),
+                'pyexecdir=' + os.path.join(srcdir, self.build_lib),
+            ]
+            subprocess.check_call(['make', '-C', builddir] + make_args)
+            subprocess.check_call(['make', '-C', builddir, 'install'] + make_args)
+        else:
+            subprocess.check_call(
+                [
+                    sys.executable,
+                    '-m', 'mesonbuild.mesonmain',
+                    '--prefix=' + os.path.join(builddir, 'prefix'),
+                    '-Ddoc=false',
+                    '-Dinstalled_tests=false',
+                    '-Dpython=' + sys.executable,
+                    '-Dpython.platlibdir=' + os.path.join(srcdir, self.build_lib),
+                    '-Dpython.purelibdir=' + os.path.join(srcdir, self.build_lib),
+                    '-Dtests=false',
+                    srcdir,
+                    builddir,
+                ]
+            )
+            subprocess.check_call(['meson', 'compile', '-C', builddir])
+            subprocess.check_call(['meson', 'install', '-C', builddir])
 
 class BuildExt(Distribution().get_command_class('build_ext')):
     def run(self):
@@ -85,27 +127,13 @@ dbus_glib_bindings = Extension('_dbus_glib_bindings',
 setup(
     name='dbus-python',
     version=version,
-    description='Python bindings for libdbus',
-    long_description=open('README').read(),
-    maintainer='The D-Bus maintainers',
-    maintainer_email='dbus@lists.freedesktop.org',
-    download_url='http://dbus.freedesktop.org/releases/dbus-python/',
-    url='http://www.freedesktop.org/wiki/Software/DBusBindings/#python',
     packages=['dbus'],
     ext_modules=[dbus_bindings, dbus_glib_bindings],
-    license='Expat (MIT/X11)',
-    classifiers=[
-        'Development Status :: 7 - Inactive',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: C',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Topic :: Software Development :: Object Brokering',
-    ],
     cmdclass={
         'build': Build,
         'build_py': BuildPy,
         'build_ext': BuildExt,
     },
+    setup_requires=setup_requires,
     tests_require=['tap.py'],
 )

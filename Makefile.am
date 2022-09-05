@@ -39,6 +39,8 @@ EXTRA_DIST = \
 	examples/unix-fd-service.py \
 	meson.build \
 	meson_options.txt \
+	pyproject.toml \
+	setup.cfg \
 	setup.py \
 	test/TestSuitePythonService.service.in \
 	test/compiled.test.in \

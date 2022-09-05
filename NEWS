@@ -4,17 +4,27 @@ dbus Python Bindings 1.3.0 (UNRELEASED)
 Dependencies:
 
 • Python 3, version 3.5 or later, is required.
-  A security-supported version (currently 3.6 or later) is recommended.
+  An upstream-supported version (currently 3.7 or later) is strongly
+  recommended, and a future version of dbus-python is likely to require
+  Python 3.7 or later.
   Python 2 is no longer supported.
-• Installing from source code can be done with either Autotools or Meson.
-• Installing from PyPI using pip still relies on Autotools for now.
+
+• Installing from source code using Meson requires Python 3.5 or later
+  and Meson 0.56.2 or later. This is now the recommended build system.
+
+• Installing from source code using Autotools requires Python 3.5 or later.
+  The Autotools build system is likely to be removed in a future version.
+
+• Installing from PyPI using pip or from source code via setup.py
+  requires Python 3.7 or later, Meson 0.60.3 or later, meson-python 0.8.1
+  or later, and their dependencies (ninja, patchelf, setuptools, wheel).
 
 API changes:
 
 • dbus.gobject_service, dbus.types.UTF8String and the utf8_strings
   keyword argument were only usable with Python 2, and therefore have
   been removed, along with the rest of the special cases for Python 2.
-  (dbus-python!115; Simon McVittie)
+  (dbus-python!15; Simon McVittie)
 
 Enhancements:
 
