@@ -11,7 +11,17 @@ EXTRA_DIST = \
 	AUTHORS \
 	CONTRIBUTING.md \
 	COPYING \
+	LICENSES/AFL-2.1.txt \
+	LICENSES/GPL-2.0-or-later.txt \
+	LICENSES/MIT.txt \
 	README.md \
+	meson.build \
+	meson_options.txt \
+	tests/meson.build \
+	tests/use-as-subproject.py \
+	tests/use-as-subproject/README \
+	tests/use-as-subproject/meson.build \
+	tests/use-as-subproject/use-dbus-gmain.c \
 	$(NULL)
 
 AM_CPPFLAGS = \
