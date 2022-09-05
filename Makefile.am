@@ -25,6 +25,8 @@ EXTRA_DIST = \
 	LICENSES/MIT.txt \
 	dbus-python.pc.in \
 	doc/_static/.gitignore \
+	doc/maintainer-update-website.sh \
+	doc/meson.build \
 	examples/example-async-client.py \
 	examples/example-client.py \
 	examples/example-service.py \
@@ -35,8 +37,15 @@ EXTRA_DIST = \
 	examples/list-system-services.py \
 	examples/unix-fd-client.py \
 	examples/unix-fd-service.py \
+	meson.build \
+	meson_options.txt \
 	setup.py \
 	test/TestSuitePythonService.service.in \
+	test/compiled.test.in \
+	test/installable/meson.build \
+	test/meson.build \
+	test/py.test.in \
+	test/sh.test.in \
 	test/tmp-session-bus.conf.in \
 	tools/check-c-style.sh \
 	tools/check-coding-style.mk \

@@ -1,0 +1,30 @@
+# Copyright 2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
+
+option(
+  'doc',
+  type: 'boolean',
+  value: false,
+  description: 'Enable documentation',
+)
+
+option(
+  'installed_tests',
+  type: 'boolean',
+  value: false,
+  description: 'Enable "as-installed" testing',
+)
+
+option(
+  'python',
+  type: 'string',
+  value: '',
+  description: 'Override the Python interpreter to use',
+)
+
+option(
+  'tests',
+  type: 'boolean',
+  value: true,
+  description: 'Enable unit tests',
+)
