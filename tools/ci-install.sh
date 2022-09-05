@@ -100,7 +100,7 @@ case "$ci_distro" in
 
         $sudo apt-get -qq -y update
 
-        $sudo apt-get -qq -y install \
+        $sudo apt-get -qq -y install --no-install-recommends \
             autoconf \
             autoconf-archive \
             automake \
@@ -113,7 +113,6 @@ case "$ci_distro" in
             docbook-xsl \
             gcc \
             gnome-desktop-testing \
-            gtk-doc-tools \
             libdbus-1-dev \
             libglib2.0-dev \
             libtool \
