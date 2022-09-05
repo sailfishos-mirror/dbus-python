@@ -58,6 +58,7 @@ build:python3.7:
   stage: build
   image: "debian:buster-slim"
   variables:
+    ci_suite: buster
     dbus_ci_system_python: python3
   script: *script
 
@@ -65,6 +66,7 @@ build:python3.7-dbg:
   stage: build
   image: "debian:buster-slim"
   variables:
+    ci_suite: buster
     dbus_ci_system_python: python3-dbg
   script: *script
 
