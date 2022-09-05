@@ -372,14 +372,11 @@ dist-hook:
 	echo $(VERSION) > $(distdir)/.version
 	touch $(distdir)/MANIFEST
 	touch $(distdir)/MANIFEST.in
-	( cd $(distdir) && $(PYTHON) setup.py egg_info )
-	cp $(distdir)/dbus_python.egg-info/PKG-INFO $(distdir)
 	( cd $(distdir) && find -type d -o -print ) | \
 		LC_ALL=C sort | \
 		$(SED) -e 's|^\./||' \
 		> $(distdir)/MANIFEST
 	sed -e 's/.*/include &/' < $(distdir)/MANIFEST > $(distdir)/MANIFEST.in
-	cp $(distdir)/MANIFEST $(distdir)/dbus_python.egg-info/SOURCES.txt
 
 maintainer-upload:
 	rsync -tvpP --chmod=ugo=r $(DIST_ARCHIVES) $(DIST_ARCHIVES:%=%.asc) \

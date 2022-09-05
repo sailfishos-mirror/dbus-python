@@ -13,10 +13,11 @@
 .deps/
 .dirstamp
 .libs/
+/.eggs/
+/INSTALL
 /_autotools/
 /_meson-build/
 /_meson-source/
-/INSTALL
 /aclocal.m4
 /api/
 /autom4te.cache/
@@ -31,8 +32,8 @@
 /config.status
 /config.sub
 /configure
-/configure~
 /configure.ac~
+/configure~
 /dbus-python-*.tar.gz
 /dbus-python-*.tar.gz.asc
 /dbus-python.pc
