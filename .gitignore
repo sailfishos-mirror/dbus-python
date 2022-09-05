@@ -54,9 +54,12 @@
 /py-compile
 /stamp-h1
 /test-suite.log
+/test/*.test
 /test/*.trs
 /test/TestSuitePythonService.service
 /test/cross-*.log
+/test/installable/*.conf
+/test/installable/*.service
 /test/monitor.log
 /test/run-test.log
 /test/test-*.log
