@@ -84,14 +84,26 @@ $make -C _autotools distcheck
 $make -C _autotools install
 ( cd "$prefix" && find . -ls )
 
-dbus_ci_pyversion="$(${PYTHON:-python3} -c 'import sysconfig; print(sysconfig.get_config_var("VERSION"))')"
-export PYTHONPATH="$prefix/lib/python$dbus_ci_pyversion/site-packages:$PYTHONPATH"
-export XDG_DATA_DIRS="$prefix/share:/usr/local/share:/usr/share"
-gnome-desktop-testing-runner dbus-python
+(
+	dbus_ci_pyversion="$(${PYTHON:-python3} -c 'import sysconfig; print(sysconfig.get_config_var("VERSION"))')"
+	export PYTHONPATH="$prefix/lib/python$dbus_ci_pyversion/site-packages:$PYTHONPATH"
+	export XDG_DATA_DIRS="$prefix/share:/usr/local/share:/usr/share"
+	gnome-desktop-testing-runner dbus-python
+)
 
 # re-run the tests with dbus-python only installed via pip
-if [ -n "$VIRTUAL_ENV" ]; then
-	rm -fr "${prefix}/lib/python$dbus_ci_pyversion/site-packages"
-	pip install -vvv "${builddir}"/dbus-python-*.tar.gz
+${PYTHON:-python3} -m virtualenv --python="${PYTHON:-python3}" _venv
+(
+	. _venv/bin/activate
+	export PYTHON="$(pwd)/_venv/bin/python3"
+	"$PYTHON" -m pip install -vvv _autotools/dbus-python-*.tar.gz
+	cp -a "$prefix/share" "$prefix/venv-meta"
+	sed -E -i -e "/^Exec=/ s# (PYTHON=)?(/usr)?(/bin/)?python3[0-9.]*(-dbg)? # \\1$PYTHON #g" \
+		"$prefix"/venv-meta/installed-tests/dbus-python/*.test
+	head -n-0 -v "$prefix"/venv-meta/installed-tests/dbus-python/*.test
+	find _venv -ls
+	# not directly applicable for a venv
+	rm -f "$prefix/venv-meta/installed-tests/dbus-python/test-import-repeatedly.test"
+	export XDG_DATA_DIRS="$prefix/venv-meta:/usr/local/share:/usr/share"
 	gnome-desktop-testing-runner dbus-python
-fi
+)

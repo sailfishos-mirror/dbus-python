@@ -30,6 +30,7 @@ run in isolation.
 
 from __future__ import unicode_literals
 
+import logging
 import struct
 import sys
 import os
@@ -40,6 +41,11 @@ import dbus
 import dbus.lowlevel as lowlevel
 import dbus.types as types
 import dbus_test_utils
+
+
+logging.basicConfig()
+logging.getLogger().setLevel(1)
+logger = logging.getLogger('test-standalone')
 
 
 if 'DBUS_TEST_UNINSTALLED' in os.environ:
@@ -65,6 +71,9 @@ assert (_dbus_bindings._python_version & 0xffff0000
         '_dbus_bindings was compiled for Python %x but this is Python %x, '\
         'a different major version'\
         % (_dbus_bindings._python_version, sys.hexversion)
+
+logger.info('dbus found at %r', dbus.__file__)
+logger.info('_dbus_bindings found at %r', _dbus_bindings.__file__)
 
 def uni(x):
     """Return a Unicode string consisting of the single Unicode character

@@ -60,6 +60,9 @@ if 'DBUS_TEST_UNINSTALLED' in os.environ:
         raise Exception("DBus modules (%s) are not being picked up from the "
                 "package" % _dbus_bindings.__file__)
 
+logger.info('dbus found at %r', dbus.__file__)
+logger.info('_dbus_bindings found at %r', _dbus_bindings.__file__)
+
 NAME = "org.freedesktop.DBus.TestSuitePythonService"
 IFACE = "org.freedesktop.DBus.TestSuiteInterface"
 OBJECT = "/org/freedesktop/DBus/TestSuitePythonObject"
