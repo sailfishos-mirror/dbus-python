@@ -16,6 +16,13 @@ option(
 )
 
 option(
+  'installed_tests_subdir',
+  type: 'string',
+  value: '',
+  description: 'Suffix to make installed-tests from multiple builds co-installable',
+)
+
+option(
   'python',
   type: 'string',
   value: '',
