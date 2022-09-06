@@ -4,7 +4,7 @@ AC_PREREQ(2.59c)
 # SPDX-License-Identifier: MIT
 
 dnl Micro version is odd for non-releases
-AC_INIT([dbus-python], [1.3.2],
+AC_INIT([dbus-python], [1.3.3],
   [https://gitlab.freedesktop.org/dbus/dbus-python/-/issues/new])
 AC_CONFIG_MACRO_DIR([m4])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
