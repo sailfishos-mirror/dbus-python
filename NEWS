@@ -40,6 +40,14 @@ Enhancements:
 
 Fixes:
 
+• Raise ValueError instead of crashing with assertion failure when a
+  Unix fd index number is greater than the number of fds actually attached
+  to the message (firewalld#985; Simon McVittie)
+
+• Raise ValueError instead of crashing with assertion failure when
+  a negative number is passed to the UnixFd constructor
+  (related to firewalld#985; Simon McVittie)
+
 • Fix undefined escape sequences in docstrings
   (dbus-python#40; Jason A. Yundt)
 
