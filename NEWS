@@ -8,73 +8,75 @@ dbus Python Bindings 1.3.0 (2022-09-06)
 
 Dependencies:
 
-• Python 3, version 3.5 or later, is required.
+* Python 3, version 3.5 or later, is required.
   An upstream-supported version (currently 3.7 or later) is strongly
   recommended, and a future version of dbus-python is likely to require
   Python 3.7 or later.
   Python 2 is no longer supported.
 
-• Installing from source code using Meson requires Python 3.5 or later
+* Installing from source code using Meson requires Python 3.5 or later
   and Meson 0.56.2 or later. This is now the recommended build system.
 
-• Installing from source code using Autotools requires Python 3.5 or later.
+* Installing from source code using Autotools requires Python 3.5 or later.
   The Autotools build system is likely to be removed in a future version.
 
-• Installing from PyPI using pip or from source code via setup.py
+* Installing from PyPI using pip or from source code via setup.py
   requires Python 3.7 or later, Meson 0.60.3 or later, meson-python 0.8.1
   or later, and their dependencies (ninja, patchelf, setuptools, wheel).
 
 API changes:
 
-• dbus.gobject_service, dbus.types.UTF8String and the utf8_strings
+* dbus.gobject_service, dbus.types.UTF8String and the utf8_strings
   keyword argument were only usable with Python 2, and therefore have
   been removed, along with the rest of the special cases for Python 2.
   (dbus-python!15; Simon McVittie)
 
 Enhancements:
 
-• Add a Meson build system
+* Add a Meson build system
   (dbus-python!20; Simon McVittie)
 
-• Add methods to Message objects to manipulate the interactive
+* Add methods to Message objects to manipulate the interactive
   authorization flag
   (dbus-python!17; Ricter Zheng)
 
-• Add licensing information in REUSE format
+* Add licensing information in REUSE format
   (dbus-python!20; Simon McVittie)
 
 Fixes:
 
-• Raise ValueError instead of crashing with assertion failure when a
+* Raise ValueError instead of crashing with assertion failure when a
   Unix fd index number is greater than the number of fds actually attached
   to the message (firewalld#985; Simon McVittie)
 
-• Raise ValueError instead of crashing with assertion failure when
+* Raise ValueError instead of crashing with assertion failure when
   a negative number is passed to the UnixFd constructor
   (related to firewalld#985; Simon McVittie)
 
-• Fix undefined escape sequences in docstrings
+* Fix undefined escape sequences in docstrings
   (dbus-python#40; Jason A. Yundt)
 
-• Make `distcheck` compatible with Automake 1.16.4, by forcing an
+* Make `distcheck` compatible with Automake 1.16.4, by forcing an
   appropriate prefix to be used
   (dbus-python!15; Simon McVittie)
 
-• Update AX_PYTHON_DEVEL from autoconf-archive for better
+* Update AX_PYTHON_DEVEL from autoconf-archive for better
   forwards-compatibility
   (dbus-python!15; Simon McVittie)
 
-• Avoid various deprecation warnings in the build system
-  · distutils.sysconfig → sysconfig
-  · distutils.util → sysconfig
-  · AC_PROG_LIBTOOL → LT_INIT
-  · AC_HELP_STRING → AS_HELP_STRING
+* Avoid various deprecation warnings in the build system
+
+  - distutils.sysconfig → sysconfig
+  - distutils.util → sysconfig
+  - AC_PROG_LIBTOOL → LT_INIT
+  - AC_HELP_STRING → AS_HELP_STRING
+
   (dbus-python!15; Simon McVittie)
 
-• Fix CI for recent Python and Automake versions
+* Fix CI for recent Python and Automake versions
   (dbus-python!15; Simon McVittie)
 
-• Update bug reporting URL
+* Update bug reporting URL
   (dbus-python!15; Simon McVittie)
 
 dbus Python Bindings 1.2.18 (2021-07-20)
@@ -82,7 +84,7 @@ dbus Python Bindings 1.2.18 (2021-07-20)
 
 Build-time configuration changes:
 
-• dbus-python will be built for python3 if neither PYTHON nor
+* dbus-python will be built for python3 if neither PYTHON nor
   PYTHON_VERSION is specified. Use a command like
 
       ./configure PYTHON=$(command -v python2)
@@ -91,50 +93,52 @@ Build-time configuration changes:
 
 Dependencies:
 
-• Python 2 reached end-of-life on 2020-01-01. A future version of
+* Python 2 reached end-of-life on 2020-01-01. A future version of
   dbus-python is likely to remove Python 2 support.
 
 Fixes:
 
-• Move from collections.Sequence to collections.abc.Sequence on
+* Move from collections.Sequence to collections.abc.Sequence on
   Python ≥ 3.3, for Python 3.10 compatibility
   (dbus-python#37; Simon McVittie)
 
-• Avoid another deprecation warning for inspect.getargspec().
+* Avoid another deprecation warning for inspect.getargspec().
   This is similar to the one fixed in 1.2.4, but for dbus.decorators.signal
   rather than dbus.decorators.method. (dbus-python!8; Martin Stumpf)
 
-• Fix an unlikely fd leak if memory allocation fails for UnixFd
+* Fix an unlikely fd leak if memory allocation fails for UnixFd
   (dbus-python!9, Red Hat #1938703; David King)
 
-• Fix memory and fd leak if UnixFd is given an invalid negative
+* Fix memory and fd leak if UnixFd is given an invalid negative
   variant_level (Simon McVittie)
 
-• Avoid more deprecation warnings:
+* Avoid more deprecation warnings:
+
   - gi.repository.GObject.MainLoop etc. (now used via gi.repository.GLib)
   - gi.repository.GLib.threads_init (no longer necessary at all)
+
   (Simon McVittie)
 
-• Disable -Wdeclaration-after-statement. Python 3.9 relies on intermixed
+* Disable -Wdeclaration-after-statement. Python 3.9 relies on intermixed
   declarations and statements in its headers, so we can no longer
   enforce this. (Simon McVittie)
 
-• Convert examples to Python 3 (Simon McVittie)
+* Convert examples to Python 3 (Simon McVittie)
 
-• Use the same Python executable for build and dist/distcheck by default
+* Use the same Python executable for build and dist/distcheck by default
   (Simon McVittie)
 
 CI fixes:
 
-• Stop installing tap.py for Python 2. The latest version only supports
+* Stop installing tap.py for Python 2. The latest version only supports
   Python 3. (Simon McVittie)
 
-• Move from Python 3.8 on Debian unstable (no longer available) to
+* Move from Python 3.8 on Debian unstable (no longer available) to
   3.9 on Debian 11 (Simon McVittie)
 
-• Also test with Python 3.10 on Ubuntu 21.10 (Simon McVittie)
+* Also test with Python 3.10 on Ubuntu 21.10 (Simon McVittie)
 
-• Remove Travis-CI integration, only use Gitlab-CI (Simon McVittie)
+* Remove Travis-CI integration, only use Gitlab-CI (Simon McVittie)
 
 dbus Python Bindings 1.2.16 (2020-01-14)
 ========================================
@@ -143,13 +147,13 @@ The “bag of assorted swords” release.
 
 Enhancements:
 
-• All tests are run even if the tap.py module is not available, although
+* All tests are run even if the tap.py module is not available, although
   diagnostics for failing tests will be better if it is present.
   (Simon McVittie)
 
 Fixes:
 
-• Forbid unexpanded AX-prefixed macros more selectively, similar to
+* Forbid unexpanded AX-prefixed macros more selectively, similar to
   dbus#249. (Simon McVittie)
 
 dbus Python Bindings 1.2.14 (2019-11-25)
@@ -159,14 +163,14 @@ The “don't stand in the fire” release.
 
 Fixes:
 
-• Ensure that the numeric types from dbus.types get the same str()
+* Ensure that the numeric types from dbus.types get the same str()
   under Python 3.8 that they did under previous versions. Previously,
   Python 3.8 used their repr() for the str(), which was not intended.
   (dbus-python#31; matclab, Simon McVittie)
 
-• Disable -Winline (Simon McVittie)
+* Disable -Winline (Simon McVittie)
 
-• Add Python 3.8 to CI (Simon McVittie)
+* Add Python 3.8 to CI (Simon McVittie)
 
 dbus Python Bindings 1.2.12 (2019-09-12)
 ========================================
@@ -175,7 +179,7 @@ The “spinal bap” release.
 
 Fixes:
 
-• Don't save and restore the exception indicator when called from C code.
+* Don't save and restore the exception indicator when called from C code.
   This avoided "returned a result with an error set" errors under some
   circumstances, but also caused a regression for code that relies on
   being able to terminate the program by calling sys.exit() or raising
@@ -195,67 +199,67 @@ and CONTRIBUTING.md for more details.
 
 Dependencies:
 
-• dbus 1.8 was already required, but is more strongly required now:
+* dbus 1.8 was already required, but is more strongly required now:
   the workarounds that were used to run continuous integration with dbus
   1.6 on Ubuntu 14.04 'trusty' have been removed. (Note that dbus 1.8
   has already reached end-of-life for security support, and newer dbus
   stable branches are strongly recommended.)
 
-• When using Python 3, version 3.5 or later is strongly recommended.
+* When using Python 3, version 3.5 or later is strongly recommended.
   Python 3.4 security support ended in March 2019. No specific
   incompatibilities are known, but using dbus-python on Python 3.4 is
   no longer tested or supported.
 
 Enhancements:
 
-• Rewrite CONTRIBUTING.md document, based on Wayland's equivalent
+* Rewrite CONTRIBUTING.md document, based on Wayland's equivalent
   (Simon McVittie, with thanks to Ander Conselvan de Oliveira,
   Bryce Harrington, Eric Engestrom, Pekka Paalanen and Daniel Stone
   for their contributions to the equivalent file in Wayland)
 
-• A generated ChangeLog file is no longer included in source tarballs.
+* A generated ChangeLog file is no longer included in source tarballs.
   Please refer to the git repository at
   https://gitlab.freedesktop.org/dbus/dbus-python for detailed change
   history. (Simon McVittie)
 
-• Improve continuous integration to be run by GitLab in addition to
+* Improve continuous integration to be run by GitLab in addition to
   Travis-CI (Simon McVittie)
 
-• Add clearer license information using SPDX-License-Identifier
+* Add clearer license information using SPDX-License-Identifier
   (Simon McVittie)
 
-• Improve test coverage (Simon McVittie)
+* Improve test coverage (Simon McVittie)
 
 Fixes:
 
-• Don't set deprecated tp_print to NULL under Python 3, fixing build
+* Don't set deprecated tp_print to NULL under Python 3, fixing build
   warnings with Python 3.8 pre-releases (Simon McVittie)
 
-• Include inherited methods and properties when documenting objects,
+* Include inherited methods and properties when documenting objects,
   which regressed when migrating from epydoc to sphinx
   (Simon McVittie)
 
-• Add missing variant_level member to UnixFd type, for parity with the
+* Add missing variant_level member to UnixFd type, for parity with the
   other dbus.types types (dbus-python!3; John Baublitz)
 
-    - Note that this is a potentially incompatible change: unknown
-      keyword arguments were previously ignored (!) and are now an error.
+  - Note that this is a potentially incompatible change: unknown
+    keyword arguments were previously ignored (!) and are now an error.
 
-• Don't reply to method calls if they have the NO_REPLY_EXPECTED flag
+* Don't reply to method calls if they have the NO_REPLY_EXPECTED flag
   (fd.o#32529, dbus-python#26; Simon McVittie)
 
-• Silence -Wcast-function-type with gcc 8 (Simon McVittie)
+* Silence -Wcast-function-type with gcc 8 (Simon McVittie)
 
-• Fix distcheck with python3.7 by deleting __pycache__ during uninstall
+* Fix distcheck with python3.7 by deleting __pycache__ during uninstall
   (Simon McVittie)
 
-• Consistently save and restore the exception indicator when called
+* Consistently save and restore the exception indicator when called
   from C code (Simon McVittie)
 
-• Avoid a long-standing race condition in the automated tests
+* Avoid a long-standing race condition in the automated tests
   (Debian #898158; Simon McVittie)
 
-• Fix Qt website URL (Ralf Habacker)
+* Fix Qt website URL (Ralf Habacker)
 
 D-Bus Python Bindings 1.2.8 (2018-05-04)
 ========================================
@@ -264,21 +268,21 @@ The “cursed ice surface” release.
 
 Dependencies:
 
-• Documentation requires Sphinx and the readthedocs theme
-• Documentation no longer requires epydoc
+* Documentation requires Sphinx and the readthedocs theme
+* Documentation no longer requires epydoc
 
 Enhancements:
 
-• Build documentation with Sphinx instead of epydoc
+* Build documentation with Sphinx instead of epydoc
 
-• Remove obsolete COMPAT.txt, documenting compatibility breaks in
+* Remove obsolete COMPAT.txt, documenting compatibility breaks in
   versions over a decade old
 
 Fixes:
 
-• Make sure $(builddir)/test exists before creating .test files there
+* Make sure $(builddir)/test exists before creating .test files there
 
-• Add PKG-INFO and egg_info to dist tarballs so they can be uploaded
+* Add PKG-INFO and egg_info to dist tarballs so they can be uploaded
   to PyPI again
 
 D-Bus Python Bindings 1.2.6 (2018-01-29)
@@ -288,37 +292,37 @@ The “doppler radar” release.
 
 Dependencies:
 
-• When using Python 2, version 2.7 is now required. Python 2.6 security
+* When using Python 2, version 2.7 is now required. Python 2.6 security
   support ended in 2013.
-• When using Python 3, version 3.4 or later is now required.
+* When using Python 3, version 3.4 or later is now required.
   Python 3.2 security support ended in 2016, and Python 3.3 security
   support ended in 2017.
-• Most unit tests now require the tap.py module from PyPI.
-• The deprecated dbus-glib library is no longer required. A bundled copy
+* Most unit tests now require the tap.py module from PyPI.
+* The deprecated dbus-glib library is no longer required. A bundled copy
   of its main loop integration code is included instead.
-• GLib version 2.40 or later is required.
-• libdbus version 1.8 or later is required.
+* GLib version 2.40 or later is required.
+* libdbus version 1.8 or later is required.
 
 Enhancements:
 
-• AX_PYTHON_DEVEL is now used to find the CPPFLAGS, LDFLAGS and libraries
+* AX_PYTHON_DEVEL is now used to find the CPPFLAGS, LDFLAGS and libraries
   needed to link test-import-repeatedly to libpython, which should reduce
   the number of wheels reinvented here.
 
-• Remove workarounds for Python 2.6 limitations
+* Remove workarounds for Python 2.6 limitations
 
-• All unit tests now produce structured output (TAP)
+* All unit tests now produce structured output (TAP)
 
 Fixes:
 
-• Fix a NULL dereference in constructing a Server if the underlying C
+* Fix a NULL dereference in constructing a Server if the underlying C
   function fails
 
-• Silence compiler warnings triggered by the Python headers under gcc 7
+* Silence compiler warnings triggered by the Python headers under gcc 7
 
-• Avoid __gtype__ appearing in documentation, for reproducible builds
+* Avoid __gtype__ appearing in documentation, for reproducible builds
 
-• Rename _dbus_bindings/ and _dbus_glib_bindings/ source directories to
+* Rename _dbus_bindings/ and _dbus_glib_bindings/ source directories to
   dbus_bindings/ and dbus_glib_bindings/ to avoid an ImportWarning
   appearing in the API documentation, which made the documentation build
   non-reproducible
@@ -330,7 +334,7 @@ The “75,000 microchips” release.
 
 Enhancements:
 
-• Continous integration metadata for travis-ci.org is now available.
+* Continous integration metadata for travis-ci.org is now available.
   Similar to dbus, this is split into .travis.yml (Travis-specifics)
   and tools/ci-build.sh (intended to be useful for any CI framework,
   although it does include various workarounds for travis-ci oddities).
@@ -338,21 +342,21 @@ Enhancements:
 
 Fixes:
 
-• Make dbus.version a tuple again, not a list, for consistent sorting.
+* Make dbus.version a tuple again, not a list, for consistent sorting.
   This was a regression in 1.2.2. (Debian #816729, Simon McVittie)
 
-• Use inspect.signature() instead of inspect.getargspec() on Python
+* Use inspect.signature() instead of inspect.getargspec() on Python
   versions that have it. inspect.getargspec() is deprecated in recent
   Python 3 and seems to have disappeared from 3.6 nightly builds.
   (Simon McVittie)
 
-• Make the tests pass in "narrow" Python builds where unicode objects
+* Make the tests pass in "narrow" Python builds where unicode objects
   are UTF-16, rather than the UCS-4 used in Linux distributions.
   (fd.o #57140, Simon McVittie)
 
-• Always include headers in a consistent order (Debian #749133, Simon McVittie)
+* Always include headers in a consistent order (Debian #749133, Simon McVittie)
 
-• Include config.h in all C code that we compile. This is necessary
+* Include config.h in all C code that we compile. This is necessary
   on platforms where it might contain something like "#define _GNU_SOURCE"
   or "#define inline __inline".
   (Simon McVittie)
@@ -364,24 +368,24 @@ The “mind fray” release.
 
 Versioning changes:
 
-• dbus-python releases now have an even micro version (1.2.0, 1.2.2),
+* dbus-python releases now have an even micro version (1.2.0, 1.2.2),
   and snapshots from git have an odd micro version (1.2.1).
 
 Dependencies:
 
-• Building from git (but not from tarballs) now requires
+* Building from git (but not from tarballs) now requires
   macros from the GNU Autoconf Archive, for example the autoconf-archive
   package in Debian or Fedora derivatives.
 
-• Building from git (but not from tarballs) now requires Automake 1.13
+* Building from git (but not from tarballs) now requires Automake 1.13
   or later.
 
-• The automated tests and some examples now require PyGI (the gi module),
+* The automated tests and some examples now require PyGI (the gi module),
   not PyGObject 2 (the deprecated glib and gobject modules).
 
 Enhancements:
 
-• There is now a setuptools setup.py, allowing dbus-python to be installed
+* There is now a setuptools setup.py, allowing dbus-python to be installed
   into a virtualenv using pip from a standard Automake source release. This
   requires pre-existing system-wide installations of the normal build
   dependencies (pkg-config, libdbus, dbus-glib, a C compiler) and has
@@ -389,29 +393,29 @@ Enhancements:
   please use the Autoconf/Automake build system directly.
   (fd.o #55439; Simon McVittie)
 
-• dbus-python now uses the common compiler warnings from AX_COMPILER_FLAGS
+* dbus-python now uses the common compiler warnings from AX_COMPILER_FLAGS
   (Simon McVittie)
 
-• The automated tests can now be installed as GNOME-style "installed tests",
+* The automated tests can now be installed as GNOME-style "installed tests",
   and should be somewhat more reliable (Simon McVittie)
 
 Fixes:
 
-• ``from dbus.service import *`` now imports FallbackObject
+* ``from dbus.service import *`` now imports FallbackObject
   (fd.o #85720; Ben Longbons)
 
-• The GConf-related examples work again (fd.o #85720; Ben Longbons)
+* The GConf-related examples work again (fd.o #85720; Ben Longbons)
 
-• Consistently make examples executable, and install them all
+* Consistently make examples executable, and install them all
   (fd.o #85720; Ben Longbons)
 
-• Search PATH for an appropriately-versioned pythonX.Y-config, or as a last
+* Search PATH for an appropriately-versioned pythonX.Y-config, or as a last
   resort python-config, if there isn't a ${PYTHON}-config in the
   same directory as ${PYTHON} (fd.o #92085; Yamashita, Yuu)
 
-• Add support for the Automake 1.13 parallel test driver (Simon McVittie)
+* Add support for the Automake 1.13 parallel test driver (Simon McVittie)
 
-• Skip building API documentation if "import epydoc" fails (Simon McVittie)
+* Skip building API documentation if "import epydoc" fails (Simon McVittie)
 
 D-Bus Python Bindings 1.2.0 (2013-05-07)
 ========================================
@@ -420,34 +424,34 @@ The "compile like it's 1998" release.
 
 Dependencies:
 
-• libdbus 1.6 or later is now required.
+* libdbus 1.6 or later is now required.
 
 Enhancements:
 
-• Unicode Corrigendum 9: when used with a suitable version of libdbus
+* Unicode Corrigendum 9: when used with a suitable version of libdbus
   (1.6.10 or later, or 1.7.2 or later), noncharacters in strings are
   now accepted
 
 Fixes:
 
-• Support DBusException('something with non—ASCII') under Python 2
+* Support DBusException('something with non—ASCII') under Python 2
   (Michael Vogt, smcv; fd.o #55899)
 
-• Correct some misleading wording in COPYING which was written under the
+* Correct some misleading wording in COPYING which was written under the
   assumption that libdbus could actually be relicensed to MIT/X11
   (Thiago Macieira)
 
-• Avoid variable-length arrays, because MSVC++ is still stuck in 1998
+* Avoid variable-length arrays, because MSVC++ is still stuck in 1998
   (based on patches from Christoph Höger, fd.o #51725)
 
-• Remove unnecessary uses of stdint.h (fd.o #51725)
+* Remove unnecessary uses of stdint.h (fd.o #51725)
 
-• Add support for Unix compilers not supporting 'inline', for completeness
+* Add support for Unix compilers not supporting 'inline', for completeness
 
-• Use GObject.__class__ instead of GObjectMeta, which can no longer be
+* Use GObject.__class__ instead of GObjectMeta, which can no longer be
   imported from gi.repository.GObject in pygobject 3.8
 
-• Fix autoreconfiscation on Automake 1.13 (Marko Lindqvist, fd.o #59006)
+* Fix autoreconfiscation on Automake 1.13 (Marko Lindqvist, fd.o #59006)
 
 D-Bus Python Bindings 1.1.1 (2012-06-25)
 ========================================
@@ -456,15 +460,15 @@ The "Lemonade Sky" release.
 
 Dependencies:
 
-• libdbus 1.6 or later is now recommended. It is not strictly required yet.
+* libdbus 1.6 or later is now recommended. It is not strictly required yet.
 
 Fixes:
 
-• Validate UTF-8 according to the rules libdbus uses, falling back to our
+* Validate UTF-8 according to the rules libdbus uses, falling back to our
   own (inefficient) implementation if not compiled against dbus >= 1.6
   (fd.o #40817)
 
-• Under Python 3, in the absence of introspection or signature='...',
+* Under Python 3, in the absence of introspection or signature='...',
   pass dbus.ObjectPath or dbus.Signature arguments with the obvious
   signature 'o' or 'g', not 's'. This previously only worked in Python 2.
   (fd.o #50740)
@@ -476,30 +480,30 @@ The “eaten by spiders” release.
 
 Deprecations:
 
-• dbus.gobject_service is deprecated. Use dbus.gi_service and PyGI in new code.
+* dbus.gobject_service is deprecated. Use dbus.gi_service and PyGI in new code.
 
 API changes:
 
-• dbus.gobject_service works in legacy PyGObject 2 applications again,
+* dbus.gobject_service works in legacy PyGObject 2 applications again,
   like it did before 1.0. The down side is that it doesn't work in all PyGI
   applications any more, unlike 1.0. In PyGI applications, depend on
   dbus-python >= 1.1 and use dbus.gi_service instead - its API is the same.
   (fd.o #48904, Debian #670516)
 
-• dbus.gobject_service has been removed from Python 3 builds altogether.
+* dbus.gobject_service has been removed from Python 3 builds altogether.
 
 Enhancements:
 
-• Use DBusBasicValue from libdbus 1.5, if available, rather than reinventing it
+* Use DBusBasicValue from libdbus 1.5, if available, rather than reinventing it
 
 Fixes:
 
-• Put sockets for the regression tests in /tmp, not the builddir, fixing
+* Put sockets for the regression tests in /tmp, not the builddir, fixing
   test failures in a really long builddir (fd.o #46747)
 
-• Fix a reference leak in dbus_py_variant_level_set (fd.o #47108)
+* Fix a reference leak in dbus_py_variant_level_set (fd.o #47108)
 
-• Modify AM_CHECK_PYTHON_HEADERS so the "another way" works with Python 3
+* Modify AM_CHECK_PYTHON_HEADERS so the "another way" works with Python 3
 
 D-Bus Python Bindings 1.0.0 (2012-01-24)
 ========================================
@@ -526,7 +530,7 @@ API changes:
 * The Python 3 API is not the same as the Python 2 API; see PY3PORT.rst
   for details.
 
-• dbus.gobject_service uses PyGI, not PyGObject. (This was not meant to be
+* dbus.gobject_service uses PyGI, not PyGObject. (This was not meant to be
   an incompatible change, but unfortunately, it was. It was reverted in 1.1.0.)
 
 Enhancements:
