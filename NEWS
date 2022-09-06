@@ -1,7 +1,14 @@
-dbus Python Bindings 1.3.2 (UNRELEASED)
+dbus Python Bindings 1.3.2 (2022-09-06)
 =======================================
 
-...
+Fixes:
+
+* Reinstate PKG-INFO and egg-info in source tarball, so that it can be
+  used as a PyPI sdist
+  (Simon McVittie)
+
+* Fix reStructured Text formatting in NEWS
+  (Simon McVittie)
 
 dbus Python Bindings 1.3.0 (2022-09-06)
 =======================================
