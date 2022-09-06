@@ -167,7 +167,8 @@ so you should have an issue number or a merge request ID to refer to.
 #### Pre-release steps
 
 * Make sure CI (currently Gitlab-CI) is passing
-* Update `NEWS` and the version number in `configure.ac`, and commit them
+* Update `NEWS` and the version numbers in **both** `configure.ac`
+  and `meson.build`, and commit them
 
 #### Building and uploading the release
 
@@ -187,4 +188,5 @@ twine upload ${builddir}/dbus-python-${version}.tar.gz{,.asc}
 #### Post-release steps
 
 * Announce the new release to the D-Bus mailing list
-* Update `NEWS` and the version number in `configure.ac`, and commit them
+* Update `NEWS` and the version number in `configure.ac` and `meson.build`,
+  and commit them
