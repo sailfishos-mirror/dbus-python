@@ -52,8 +52,8 @@ EXTRA_DIST = \
 	tools/check-c-style.sh \
 	tools/check-coding-style.mk \
 	tools/check-py-style.sh \
-	tools/check-whitespace.sh
-	tools/ci-build.sh \
+	tools/check-whitespace.sh \
+	tools/generate-pkginfo.py \
 	$(NULL)
 
 # === C code ===
@@ -370,13 +370,22 @@ $(patsubst %,%.test,$(test_programs)): %.test: Makefile
 
 dist-hook:
 	echo $(VERSION) > $(distdir)/.version
+	$(MKDIR_P) $(distdir)/dbus_python.egg-info
 	touch $(distdir)/MANIFEST
 	touch $(distdir)/MANIFEST.in
+	touch $(distdir)/dbus_python.egg-info/SOURCES.txt
+	$(PYTHON) $(distdir)/tools/generate-pkginfo.py $(VERSION) $(distdir)/PKG-INFO
+	echo > $(distdir)/dbus_python.egg-info/dependency_links.txt
+	echo _dbus_bindings > $(distdir)/dbus_python.egg-info/top_level.txt
+	echo _dbus_glib_bindings >> $(distdir)/dbus_python.egg-info/top_level.txt
+	echo dbus >> $(distdir)/dbus_python.egg-info/top_level.txt
+	cp $(distdir)/PKG-INFO $(distdir)/dbus_python.egg-info/PKG-INFO
 	( cd $(distdir) && find -type d -o -print ) | \
 		LC_ALL=C sort | \
 		$(SED) -e 's|^\./||' \
 		> $(distdir)/MANIFEST
 	sed -e 's/.*/include &/' < $(distdir)/MANIFEST > $(distdir)/MANIFEST.in
+	cp $(distdir)/MANIFEST $(distdir)/dbus_python.egg-info/SOURCES.txt
 
 maintainer-upload:
 	rsync -tvpP --chmod=ugo=r $(DIST_ARCHIVES) $(DIST_ARCHIVES:%=%.asc) \

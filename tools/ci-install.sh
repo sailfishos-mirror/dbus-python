@@ -162,6 +162,24 @@ case "$ci_distro" in
                 have_system_meson=true
                 ;;
         esac
+
+        # Needed for distcheck
+        case "$ci_suite" in
+            (buster|focal|bullseye)
+                runuser -u user -- \
+                    "${dbus_ci_system_python-python3}" -m pip install --user \
+                    pyproject_metadata \
+                    tomli \
+                    ${NULL}
+                ;;
+
+            (*)
+                $sudo apt-get -qq -y install \
+                    python3-pyproject-metadata \
+                    python3-tomli \
+                    ${NULL}
+                ;;
+        esac
         ;;
 
     (*)
