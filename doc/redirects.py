@@ -21,23 +21,23 @@ if __name__ == '__main__':
             page, dest = line.split(None, 1)
 
             try:
-                os.makedirs(os.path.join('doc', '_build', os.path.dirname(page)))
+                os.makedirs(os.path.join('doc', 'html', os.path.dirname(page)))
             except OSError:
                 pass
 
-            assert not os.path.exists(os.path.join('doc', '_build', page))
+            assert not os.path.exists(os.path.join('doc', 'html', page))
 
             if dest.startswith('"'):
                 assert page.endswith('.txt')
                 text = dest.strip('"')
 
-                with open(os.path.join('doc', '_build', page), 'w') as writer:
+                with open(os.path.join('doc', 'html', page), 'w') as writer:
                     writer.write(text)
                     writer.write('\n')
             else:
                 assert page.endswith('.html')
 
-                with open(os.path.join('doc', '_build', page), 'w') as writer:
+                with open(os.path.join('doc', 'html', page), 'w') as writer:
                     writer.write(
                         '<meta http-equiv="refresh" content="0; url={}" />\n'.format(
                             dest))

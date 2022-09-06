@@ -42,7 +42,7 @@
 /dbus_python.egg-info/
 /depcomp
 /dist/
-/doc/_build/
+/doc/html/
 /install-sh
 /libtool
 /ltmain.sh

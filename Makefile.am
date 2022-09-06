@@ -423,31 +423,31 @@ uninstall-local-pycache:
 	rm -fr $(DESTDIR)$(pythondir)/dbus/mainloop/__pycache__
 
 if ENABLE_DOCUMENTATION
-all: doc/_build/.stamp
+all: doc/html/.stamp
 
-doc/_build/.stamp: $(nobase_python_PYTHON) \
+doc/html/.stamp: $(nobase_python_PYTHON) \
 			_dbus_bindings.la \
 			_dbus_glib_bindings.la \
 			$(sphinx_sources) \
 			Makefile \
 			$(NULL)
-	rm -rf doc/_build
-	$(MKDIR_P) doc/_build
+	rm -rf doc/html
+	$(MKDIR_P) doc/html
 	abs_top_srcdir='$(abs_top_srcdir)' \
 	abs_top_builddir='$(abs_top_builddir)' \
 	DBUS_PYTHON_NO_DEPRECATED=1 \
-	$(PYTHON) -m sphinx -b html $(abs_top_srcdir)/doc doc/_build
+	$(PYTHON) -m sphinx -b html $(abs_top_srcdir)/doc doc/html
 	touch $@
 
-maintainer-update-website: doc/_build/.stamp
+maintainer-update-website: doc/html/.stamp
 	DBUS_TOP_SRCDIR="$(abs_top_srcdir)" \
 	$(PYTHON) $(srcdir)/doc/redirects.py
-	rsync -rtvzPp --chmod=Dg+s,ug+rwX,o=rX doc/_build/ \
+	rsync -rtvzPp --chmod=Dg+s,ug+rwX,o=rX doc/html/ \
 	dbus.freedesktop.org:/srv/dbus.freedesktop.org/www/doc/dbus-python/
 
-install-data-local-sphinx: doc/_build/.stamp
+install-data-local-sphinx: doc/html/.stamp
 	$(mkinstalldirs) $(DESTDIR)$(htmldir)
-	cp -R doc/_build/* $(DESTDIR)$(htmldir)
+	cp -R doc/html/* $(DESTDIR)$(htmldir)
 
 uninstall-local-sphinx:
 	rm -fr $(DESTDIR)$(htmldir)
@@ -462,7 +462,7 @@ uninstall-local-sphinx:
 endif
 
 clean-local:
-	rm -rf doc/_build
+	rm -rf doc/html
 
 check_c_sources = \
 	$(_dbus_bindings_la_SOURCES) \
