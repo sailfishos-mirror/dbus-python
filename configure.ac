@@ -3,14 +3,8 @@ AC_PREREQ(2.59c)
 # Copyright 2006-2022 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 
-dnl The dbus-python version number
-m4_define(dbus_python_major_version, 1)
-m4_define(dbus_python_minor_version, 2)
 dnl Micro version is odd for non-releases
-m4_define(dbus_python_micro_version, 19)
-
-AC_INIT([dbus-python],
-  dbus_python_major_version.dbus_python_minor_version.dbus_python_micro_version,
+AC_INIT([dbus-python], [1.2.19],
   [https://gitlab.freedesktop.org/dbus/dbus-python/-/issues/new])
 AC_CONFIG_MACRO_DIR([m4])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
@@ -25,12 +19,6 @@ m4_pattern_forbid([^AX_(COMPILER_FLAGS|IS_RELEASE|PYTHON_DEVEL|PYTHON_MODULE)\b]
 AM_MAINTAINER_MODE([enable])
 
 AX_IS_RELEASE([micro-version])
-AC_DEFINE(DBUS_PYTHON_MAJOR_VERSION, dbus_python_major_version, [dbus-python major version])
-AC_SUBST(DBUS_PYTHON_MAJOR_VERSION, dbus_python_major_version)
-AC_DEFINE(DBUS_PYTHON_MINOR_VERSION, dbus_python_minor_version, [dbus-python minor version])
-AC_SUBST(DBUS_PYTHON_MINOR_VERSION, dbus_python_minor_version)
-AC_DEFINE(DBUS_PYTHON_MICRO_VERSION, dbus_python_micro_version, [dbus-python micro version])
-AC_SUBST(DBUS_PYTHON_MICRO_VERSION, dbus_python_micro_version)
 
 AC_CONFIG_SRCDIR([dbus_bindings/module.c])
 AC_CONFIG_HEADERS(config.h)
