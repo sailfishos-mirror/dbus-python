@@ -102,4 +102,23 @@ build:python3.10-dbg:
   script: *script
   artifacts: *artifacts
 
+build:python3.11:
+  stage: build
+  image: "debian:bookworm-slim"
+  variables:
+    ci_suite: bookworm
+    dbus_ci_system_python: python3.11
+  script: *script
+  artifacts: *artifacts
+
+build:python3.11-dbg:
+  stage: build
+  image: "debian:bookworm-slim"
+  variables:
+    ci_suite: bookworm
+    dbus_ci_system_python: python3.11-dbg
+    dbus_ci_system_python_module_suffix: -dbg
+  script: *script
+  artifacts: *artifacts
+
 # vim:set sw=2 sts=2 et:
