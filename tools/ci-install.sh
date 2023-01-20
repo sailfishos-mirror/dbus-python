@@ -127,10 +127,12 @@ case "$ci_distro" in
 
         case "$ci_suite" in
             (buster|focal)
+                ninja=ninja==1.10.2.4
                 ;;
 
             (*)
                 $sudo apt-get -qq -y install meson
+                ninja=ninja
                 have_system_meson=true
                 ;;
         esac
@@ -162,9 +164,9 @@ esac
 if [ -n "$have_system_meson" ]; then
     :
 elif [ -n "${dbus_ci_system_python-}" ]; then
-    "$dbus_ci_system_python" -m pip install --user meson ninja
+    "$dbus_ci_system_python" -m pip install --user meson $ninja
 else
-    pip install meson ninja
+    pip install meson $ninja
 fi
 
 # vim:set sw=4 sts=4 et:
