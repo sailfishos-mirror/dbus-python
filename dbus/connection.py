@@ -577,6 +577,8 @@ class Connection(_Connection):
 
         if reply_handler is None and error_handler is None:
             # we don't care what happens, so just send it
+            # (and we can let the recipient optimize by not replying to us)
+            message.set_no_reply(True)
             self.send_message(message)
             return
 
