@@ -94,6 +94,7 @@ case "$ci_distro" in
             libglib2.0-dev \
             libtool \
             make \
+            ninja-build \
             sudo \
             virtualenv \
             wget \
