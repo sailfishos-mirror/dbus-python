@@ -100,6 +100,7 @@ case "$ci_distro" in
         $sudo apt-get -qq -y update
 
         $sudo apt-get -qq -y install --no-install-recommends \
+            adduser \
             autoconf \
             autoconf-archive \
             automake \
