@@ -39,11 +39,6 @@ NULL=
 # the package (not currently supported for dbus-python)
 : "${ci_host:=native}"
 
-# ci_in_docker:
-# Used internally by ci-install.sh. If yes, we are inside the Docker image
-# (ci_docker is empty in this case).
-: "${ci_in_docker:=no}"
-
 # ci_suite:
 # OS suite (release, branch) in which we are testing.
 # Typical values for ci_distro=debian: sid, buster
@@ -84,7 +79,6 @@ case "$ci_distro" in
         $sudo apt-get -qq -y update
 
         $sudo apt-get -qq -y install --no-install-recommends \
-            adduser \
             autoconf \
             autoconf-archive \
             automake \
@@ -120,14 +114,6 @@ case "$ci_distro" in
                 ${NULL}
         fi
 
-        if [ "$ci_in_docker" = yes ]; then
-            # Add the user that we will use to do the build inside the
-            # Docker container, and let them use sudo
-            adduser --disabled-password --gecos "" user
-            echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/nopasswd
-            chmod 0440 /etc/sudoers.d/nopasswd
-        fi
-
         case "$ci_suite" in
             (buster|focal|bullseye)
                 $sudo apt-get -qq -y install dbus
@@ -151,8 +137,7 @@ case "$ci_distro" in
         # Needed for distcheck
         case "$ci_suite" in
             (buster|focal|bullseye)
-                runuser -u user -- \
-                    "${dbus_ci_system_python-python3}" -m pip install --user \
+                "${dbus_ci_system_python-python3}" -m pip install --user \
                     pyproject_metadata \
                     tomli \
                     ${NULL}
@@ -176,9 +161,9 @@ esac
 if [ -n "$have_system_meson" ]; then
     :
 elif [ -n "${dbus_ci_system_python-}" ]; then
-    runuser -u user -- "$dbus_ci_system_python" -m pip install --user meson ninja
+    "$dbus_ci_system_python" -m pip install --user meson ninja
 else
-    runuser -u user -- pip install meson ninja
+    pip install meson ninja
 fi
 
 # vim:set sw=4 sts=4 et:

@@ -31,16 +31,13 @@ before_script:
 
 variables:
   dbus_ci_configure_flags: ''
-  ci_in_docker: "yes"
   ci_parallel: "2"
-  ci_sudo: "yes"
   ci_distro: "debian"
   ci_suite: "bookworm"
 
 .common:
   script: &script
-    - chown -R user .
-    - runuser -u user -- env PATH="/home/user/.local/bin:/usr/lib/ccache:$PATH" ./tools/ci-build.sh $dbus_ci_configure_flags
+    - env PATH="$HOME/.local/bin:/usr/lib/ccache:$PATH" ./tools/ci-build.sh $dbus_ci_configure_flags
   artifacts: &artifacts
     paths:
       - _autotools/*.log
