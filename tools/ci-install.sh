@@ -34,12 +34,6 @@ NULL=
 # Typical values: ubuntu, debian; maybe fedora in future
 : "${ci_distro:=debian}"
 
-# ci_docker:
-# If non-empty, this is the name of a Docker image. ci-install.sh will
-# fetch it with "docker pull" and use it as a base for a new Docker image
-# named "ci-image" in which we will do our testing.
-: "${ci_docker:=}"
-
 # ci_host:
 # Either "native", or an Autoconf --host argument to cross-compile
 # the package (not currently supported for dbus-python)
@@ -63,16 +57,6 @@ else
 fi
 
 have_system_meson=
-
-if [ -n "$ci_docker" ]; then
-    sed \
-        -e "s/@ci_distro@/${ci_distro}/" \
-        -e "s/@ci_docker@/${ci_docker}/" \
-        -e "s/@ci_suite@/${ci_suite}/" \
-        -e "s/@dbus_ci_system_python@/${dbus_ci_system_python-}/" \
-        < tools/ci-Dockerfile.in > Dockerfile
-    exec docker build -t ci-image .
-fi
 
 if [ -n "${dbus_ci_system_python-}" ]; then
     if [ -z "${dbus_ci_system_python_module_suffix-}" ]; then
