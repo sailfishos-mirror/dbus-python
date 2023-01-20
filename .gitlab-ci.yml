@@ -34,6 +34,7 @@ variables:
   ci_parallel: "2"
   ci_distro: "debian"
   ci_suite: "bookworm"
+  GIT_STRATEGY: clone
 
 .common:
   script: &script
