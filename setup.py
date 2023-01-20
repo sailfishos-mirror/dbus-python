@@ -25,8 +25,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-from distutils.dir_util import copy_tree, mkpath
-from distutils.file_util import copy_file
+from distutils.dir_util import mkpath
 from setuptools.dist import Distribution
 from setuptools import setup, Extension
 import os
