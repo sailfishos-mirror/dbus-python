@@ -40,7 +40,7 @@ variables:
 .common:
   script: &script
     - chown -R user .
-    - runuser -u user -- env PATH="/usr/lib/ccache:$PATH" ./tools/ci-build.sh $dbus_ci_configure_flags
+    - runuser -u user -- env PATH="/home/user/.local/bin:/usr/lib/ccache:$PATH" ./tools/ci-build.sh $dbus_ci_configure_flags
   artifacts: &artifacts
     paths:
       - _autotools/*.log
