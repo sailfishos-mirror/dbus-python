@@ -581,6 +581,42 @@ class TestMatching(unittest.TestCase):
         self._message.append('/', signature='o')
         self.assertFalse(self._match.maybe_handle_message(self._message))
 
+class TestArg0Namespace(unittest.TestCase):
+    def setUp(self):
+        self._match = dbus.connection.SignalMatch(object, None, '/', None, None,
+                                  None, arg0namespace='org.freedesktop.dbus-python')
+
+    def test_invalid_arg1namespace(self):
+        try:
+            dbus.connection.SignalMatch(object, None, '/', None, None,
+                                  None, arg1namespace='org.freedesktop.dbus-python')
+        except TypeError:
+            pass
+        else:
+            raise AssertionError('arg1namespace is not a valid keyword argument')
+
+    def test_namespace_match(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('org.freedesktop.dbus-python', signature='s')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
+    def test_namespace_match2(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('org.freedesktop.dbus-python.test', signature='s')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
+    def test_namespace_mismatch(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('org.freedesktop.dbus-python-test', signature='s')
+        self.assertFalse(self._match.maybe_handle_message(message))
+
+    def test_namespace_type_mismatch(self):
+        match = dbus.connection.SignalMatch(object, None, '/', None, None,
+                                  None, arg0namespace='1')
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append(1, signature='i')
+        self.assertFalse(match.maybe_handle_message(message))
+
 class TestVersion(unittest.TestCase):
     if sys.version_info[:2] < (2, 7):
         def assertGreater(self, first, second):
