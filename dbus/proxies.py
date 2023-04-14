@@ -366,6 +366,16 @@ class ProxyObject(object):
                 argument is a string that either is equal to the
                 keyword parameter, or starts with the keyword parameter
                 followed by a dot (and optionally more text).
+            `arg...path`: str
+                If there are additional keyword parameters of the form
+                ``arg``\\ *n* ``path``, match only signals where the *n*\\ th
+                argument is either equal or matches in a path-like manner.
+                A path-like comparison matches when either the keyword or the
+                argument ends with a '/' and is a prefix of the other. An
+                example argument path match is arg0path='/aa/bb/'. This would
+                match messages with first arguments of '/', '/aa/', '/aa/bb/',
+                '/aa/bb/cc/' and '/aa/bb/cc'. It would not match messages with
+                first arguments of '/aa/b', '/aa' or even '/aa/bb'.
         """
         return \
         self._bus.add_signal_receiver(handler_function,
