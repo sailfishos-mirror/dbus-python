@@ -55,7 +55,9 @@ class SignalMatch(object):
               '_byte_arrays', '_conn_weakref',
               '_destination_keyword', '_interface_keyword',
               '_message_keyword', '_member_keyword',
-              '_sender_keyword', '_path_keyword', '_int_args_match']
+              '_sender_keyword', '_path_keyword', '_int_args_match',
+              '_arg0namespace'
+              ]
 
     __slots__ = tuple(_slots)
 
@@ -64,7 +66,7 @@ class SignalMatch(object):
                  sender_keyword=None, path_keyword=None,
                  interface_keyword=None, member_keyword=None,
                  message_keyword=None, destination_keyword=None,
-                 **kwargs):
+                 arg0namespace=None, **kwargs):
         if member is not None:
             validate_member_name(member)
         if dbus_interface is not None:
@@ -80,6 +82,7 @@ class SignalMatch(object):
         self._interface = dbus_interface
         self._member = member
         self._path = object_path
+        self._arg0namespace = arg0namespace
         self._handler = handler
 
         # if the connection is actually a bus, it's responsible for changing
@@ -141,6 +144,8 @@ class SignalMatch(object):
                 rule.append("interface='%s'" % self._interface)
             if self._member is not None:
                 rule.append("member='%s'" % self._member)
+            if self._arg0namespace is not None:
+                rule.append("arg0namespace='%s'" % self._arg0namespace)
             if self._int_args_match is not None:
                 for index, value in self._int_args_match.items():
                     rule.append("arg%d='%s'" % (index, value))
@@ -187,6 +192,16 @@ class SignalMatch(object):
                     or not isinstance(args[index], String)
                     or args[index] != value):
                     return False
+        if self._arg0namespace is not None:
+            kwargs = dict(byte_arrays=True)
+            args = message.get_args_list(**kwargs)
+            namespace_len = len(self._arg0namespace)
+            if ( len(args) == 0
+                or not isinstance(args[0], String)
+                or not args[0].startswith(self._arg0namespace)
+                or args[0][namespace_len:namespace_len + 1] not in ('', '.')
+            ):
+                return False
 
         # these have likely already been checked by the match tree
         if self._member not in (None, message.get_member()):
@@ -382,6 +397,11 @@ class Connection(_Connection):
                 is the value given for that keyword parameter. As of this
                 time only string arguments can be matched (in particular,
                 object paths and signatures can't).
+            `arg0namespace` : str
+                If not None (the default) match only signals where the first
+                argument is a string that either is equal to the
+                keyword parameter, or starts with the keyword parameter
+                followed by a dot (and optionally more text).
             `named_service` : str
                 A deprecated alias for `bus_name`.
         """

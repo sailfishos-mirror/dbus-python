@@ -361,6 +361,11 @@ class ProxyObject(object):
                 is the value given for that keyword parameter. As of this time
                 only string arguments can be matched (in particular,
                 object paths and signatures can't).
+            `arg0namespace` : str
+                If not None (the default) match only signals where the first
+                argument is a string that either is equal to the
+                keyword parameter, or starts with the keyword parameter
+                followed by a dot (and optionally more text).
         """
         return \
         self._bus.add_signal_receiver(handler_function,
