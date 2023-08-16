@@ -97,7 +97,7 @@ case "$ci_distro" in
             ${NULL}
 
         if [ -n "${dbus_ci_system_python-}" ]; then
-              sudo apt-get -qq -y install \
+              $sudo apt-get -qq -y install \
                 ${dbus_ci_system_python} \
                 ${dbus_ci_system_python%-dbg}-dev \
                 python3-docutils \
