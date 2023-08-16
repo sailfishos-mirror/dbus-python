@@ -134,7 +134,7 @@ case "$ci_distro" in
 
         # Needed for distcheck
         case "$ci_suite" in
-            (buster|focal|bullseye)
+            (buster|focal|bullseye|jammy)
                 "${dbus_ci_system_python-python3}" -m pip install --user \
                     pyproject_metadata \
                     tomli \

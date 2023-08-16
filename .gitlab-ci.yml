@@ -84,18 +84,20 @@ build:python3.9-dbg:
 
 build:python3.10:
   stage: build
-  image: "debian:bookworm-slim"
+  image: "ubuntu:jammy"
   variables:
-    ci_suite: bookworm
+    ci_distro: ubuntu
+    ci_suite: jammy
     dbus_ci_system_python: python3.10
   script: *script
   artifacts: *artifacts
 
 build:python3.10-dbg:
   stage: build
-  image: "debian:bookworm-slim"
+  image: "ubuntu:jammy"
   variables:
-    ci_suite: bookworm
+    ci_distro: ubuntu
+    ci_suite: jammy
     dbus_ci_system_python: python3.10-dbg
     dbus_ci_system_python_module_suffix: -dbg
   script: *script
