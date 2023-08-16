@@ -1,7 +1,20 @@
-dbus Python Bindings 1.3.4 (UNRELEASED)
+dbus Python Bindings 1.4.0 (UNRELEASED)
 =======================================
 
-...
+Enhancements:
+
+* Automatically set the NO_REPLY message flag in call_async if there
+  is no reply handler and no error handler (dbus-python!22, Mihai Dumitru)
+
+* Add arg0namespace match rule support (dbus-python!27, Jeroen Hofstee)
+
+Fixes:
+
+* Avoid using distutils in setup.py (Simon McVittie)
+
+* Fix a typo in example code (dbus-python!25, Robert Ancell)
+
+* CI fixes (Simon McVittie)
 
 dbus Python Bindings 1.3.2 (2022-09-06)
 =======================================
