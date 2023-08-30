@@ -617,6 +617,68 @@ class TestArg0Namespace(unittest.TestCase):
         message.append(1, signature='i')
         self.assertFalse(match.maybe_handle_message(message))
 
+class TestPathMatches(unittest.TestCase):
+    def setUp(self):
+        self._match = dbus.connection.SignalMatch(object, None, '/', None, None,
+                                  None, arg0path='/aa/bb/')
+
+    def test_empty_path(self):
+        match = dbus.connection.SignalMatch(object, None, '/', None, None,
+                                  None, arg0path='')
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/', signature='s')
+        self.assertFalse(match.maybe_handle_message(message))
+
+    def test_empty_value(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('', signature='s')
+        self.assertFalse(self._match.maybe_handle_message(message))
+
+    def test_root(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/', signature='s')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
+    def test_aa(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa/', signature='s')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
+    def test_aa_bb(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa/bb/', signature='s')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
+    def test_aa_bb_cc(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa/bb/cc/', signature='s')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
+    def test_aa_bb_cc2(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa/bb/cc', signature='s')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
+    def test_no_match_aa_b(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa/b', signature='s')
+        self.assertFalse(self._match.maybe_handle_message(message))
+
+    def test_no_match_aa(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa', signature='s')
+        self.assertFalse(self._match.maybe_handle_message(message))
+
+    def test_no_match_aa_bb(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa/bb', signature='s')
+        self.assertFalse(self._match.maybe_handle_message(message))
+
+    def test_object_path(self):
+        message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
+        message.append('/aa/bb/cc', signature='o')
+        self.assertTrue(self._match.maybe_handle_message(message))
+
 class TestVersion(unittest.TestCase):
     if sys.version_info[:2] < (2, 7):
         def assertGreater(self, first, second):
