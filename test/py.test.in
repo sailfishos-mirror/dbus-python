@@ -1,3 +1,5 @@
+# Copyright 2022 Collabora Ltd.
+# SPDX-License-Identifier: MIT
 [Test]
 Type=session
 Exec=@wrapper@  @python@ @program@
