@@ -28,6 +28,10 @@
 
 #include "dbus_bindings-internal.h"
 
+#ifndef _WIN32
+#include <unistd.h>
+#endif
+
 #define DBG_IS_TOO_VERBOSE
 #include "compat-internal.h"
 #include "types-internal.h"

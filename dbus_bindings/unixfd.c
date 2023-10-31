@@ -31,6 +31,10 @@
 #include <Python.h>
 #include <structmember.h>
 
+#ifndef _WIN32
+#include <unistd.h>
+#endif
+
 #include "types-internal.h"
 
 PyDoc_STRVAR(UnixFd_tp_doc,
