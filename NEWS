@@ -8,7 +8,14 @@ Enhancements:
 
 * Add arg0namespace match rule support (dbus-python!27, Jeroen Hofstee)
 
+* Add argNpath match rules support (dbus-python!24, Jeroen Hofstee)
+
+* Mention more alternatives to this package in the README (Simon McVittie)
+
 Fixes:
+
+* Don't require tomllib when generating dist tarball on Python ≥ 3.11
+  (dbus-python#54, Timo Gurr)
 
 * Avoid using distutils in setup.py (Simon McVittie)
 
