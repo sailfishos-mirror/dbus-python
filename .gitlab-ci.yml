@@ -127,4 +127,27 @@ build:python3.11-dbg:
   script: *script
   artifacts: *artifacts
 
+build:python3.12:
+  stage: build
+  image: "ubuntu:noble"
+  variables:
+    ci_distro: ubuntu
+    ci_suite: noble
+    dbus_ci_system_python: python3.12
+  script: *script
+  artifacts: *artifacts
+
+build:python3.12-dbg:
+  stage: build
+  image: "ubuntu:noble"
+  variables:
+    ci_distro: ubuntu
+    ci_suite: noble
+    dbus_ci_system_python: python3.12-dbg
+    dbus_ci_system_python_module_suffix: ''
+  script: *script
+  artifacts: *artifacts
+  # assertion failure in import-repeatedly needs investigating
+  when: manual
+
 # vim:set sw=2 sts=2 et:

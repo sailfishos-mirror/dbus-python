@@ -54,7 +54,7 @@ fi
 have_system_meson=
 
 if [ -n "${dbus_ci_system_python-}" ]; then
-    if [ -z "${dbus_ci_system_python_module_suffix-}" ]; then
+    if [ -z "${dbus_ci_system_python_module_suffix+set}" ]; then
         case "$dbus_ci_system_python}" in
             (*-dbg)
                 dbus_ci_system_python_module_suffix=-dbg
