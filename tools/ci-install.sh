@@ -133,12 +133,26 @@ case "$ci_distro" in
         esac
 
         # Needed for distcheck
-        case "$ci_suite" in
-            (buster|focal|bullseye|jammy)
+        case "$ci_suite:$dbus_ci_system_python" in
+            (buster:*|focal:*|bullseye:*|jammy:*)
                 "${dbus_ci_system_python-python3}" -m pip install --user \
                     pyproject_metadata \
                     tomli \
                     ${NULL}
+                ;;
+
+            (testing:python3.13*)
+                $sudo apt-get -qq -y install \
+                    gir1.2-gtk-4.0 \
+                    libcairo2-dev \
+                    libgirepository1.0-dev \
+                    pkg-config \
+                    python3.13-dev \
+                    ${NULL}
+
+                "${dbus_ci_system_python-python3}" -m pip install --user --break-system-packages pycairo
+                "${dbus_ci_system_python-python3}" -m pip install --user --break-system-packages PyGObject
+                "${dbus_ci_system_python-python3}" -m pip install --user --break-system-packages pyproject_metadata
                 ;;
 
             (*)
