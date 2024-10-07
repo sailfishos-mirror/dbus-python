@@ -148,4 +148,23 @@ build:python3.12-dbg:
   script: *script
   artifacts: *artifacts
 
+build:python3.13:
+  stage: build
+  image: "debian:testing-slim"
+  variables:
+    ci_suite: testing
+    dbus_ci_system_python: python3.13
+  script: *script
+  artifacts: *artifacts
+
+build:python3.13-dbg:
+  stage: build
+  image: "debian:testing-slim"
+  variables:
+    ci_suite: testing
+    dbus_ci_system_python: python3.13-dbg
+    dbus_ci_system_python_module_suffix: ''
+  script: *script
+  artifacts: *artifacts
+
 # vim:set sw=2 sts=2 et:
