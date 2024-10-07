@@ -10,13 +10,16 @@ import sys
 from pathlib import Path
 
 import pyproject_metadata
-import tomli
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import tomli as tomllib
 
 if __name__ == '__main__':
     top_srcdir = Path(__file__).parent.parent
 
     with open(top_srcdir / 'pyproject.toml') as reader:
-        conf = tomli.loads(reader.read())
+        conf = tomllib.loads(reader.read())
 
     meta = pyproject_metadata.StandardMetadata.from_pyproject(conf, top_srcdir)
     meta.version = sys.argv[1]
