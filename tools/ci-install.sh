@@ -144,7 +144,6 @@ case "$ci_distro" in
             (*)
                 $sudo apt-get -qq -y install \
                     python3-pyproject-metadata \
-                    python3-tomli \
                     ${NULL}
                 ;;
         esac
