@@ -159,7 +159,8 @@ finally:
 static PyObject *
 DBusPyServer_ExistingFromDBusServer(DBusServer *server)
 {
-    PyObject *self, *ref;
+    PyObject *self = NULL;
+    PyObject *ref;
 
     Py_BEGIN_ALLOW_THREADS
     ref = (PyObject *)dbus_server_get_data(server,
@@ -167,15 +168,15 @@ DBusPyServer_ExistingFromDBusServer(DBusServer *server)
     Py_END_ALLOW_THREADS
     if (ref) {
         DBG("(DBusServer *)%p has weak reference at %p", server, ref);
-        self = PyWeakref_GetObject(ref);   /* still a borrowed ref */
+        if (PyWeakref_GetRef(ref, &self) < 0) {
+            return NULL;
+        }
         if (self && self != Py_None && DBusPyServer_Check(self)) {
             DBG("(DBusServer *)%p has weak reference at %p pointing to %p",
                 server, ref, self);
-            TRACE(self);
-            Py_INCREF(self);
-            TRACE(self);
             return self;
         }
+        Py_CLEAR(self);
     }
 
     PyErr_SetString(PyExc_AssertionError,
@@ -262,17 +263,21 @@ DBusPyServer_NewConsumingDBusServer(PyTypeObject *cls,
                                            _server_python_slot);
     Py_END_ALLOW_THREADS
     if (ref) {
-        self = (Server *)PyWeakref_GetObject(ref);
+        PyObject *obj = NULL;
+        if (PyWeakref_GetRef(ref, &obj) < 0) {
+            return NULL;
+        }
         ref = NULL;
-        if (self && (PyObject *)self != Py_None) {
-            self = NULL;
+        if (obj && obj != Py_None) {
             PyErr_SetString(PyExc_AssertionError,
                             "Newly created D-Bus server already has a "
                             "Server instance associated with it");
             DBG("%s() fail - assertion failed, DBusPyServer has a DBusServer already", __func__);
             DBG_WHEREAMI;
+            Py_CLEAR(obj);
             return NULL;
         }
+        Py_CLEAR(obj);
     }
     ref = NULL;
 

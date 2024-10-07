@@ -57,6 +57,24 @@
 #   define USING_DBG 1
 #endif
 
+#if PY_VERSION_HEX < 0x030d00c0
+static inline int backport_PyWeakref_GetRef(PyObject *ref, PyObject **pobj)
+{
+    PyObject *obj = PyWeakref_GetObject(ref);
+
+    if (obj && obj != Py_None) {
+        Py_INCREF(obj);
+        *pobj = obj;
+        return 1;
+    }
+    else {
+        *pobj = NULL;
+        return 0;
+    }
+}
+#define PyWeakref_GetRef(ref, pobj) backport_PyWeakref_GetRef(ref, pobj)
+#endif
+
 #define DEFINE_CHECK(type) \
 static inline int type##_Check (PyObject *o) \
 { \
