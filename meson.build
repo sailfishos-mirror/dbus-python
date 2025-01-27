@@ -225,6 +225,11 @@ if sphinx_dep.found()
     subdir('doc')
 endif
 
-if get_option('tests')
+dbus_run_session = find_program(
+    'dbus-run-session',
+    required: get_option('tests'),
+)
+
+if dbus_run_session.found()
     subdir('test')
 endif

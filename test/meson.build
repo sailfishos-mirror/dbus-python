@@ -69,8 +69,6 @@ if get_option('installed_tests')
     )
 endif
 
-dbus_run_session = find_program('dbus-run-session', required: true)
-
 build_time_dbus_run_session_args = [
     '--config-file', tmp_session_bus_conf,
     '--',
@@ -89,40 +87,43 @@ installed_wrapper = [
 ]
 
 compiled_test_cases = ['import-repeatedly']
+embed_dep = py.dependency(embed: true, required: get_option('tests'))
 
-foreach test_case : compiled_test_cases
-    exe = executable(
-        'test-' + test_case,
-        test_case + '.c',
-        dependencies: [
-            py.dependency(embed: true),
-            dbus_dep.partial_dependency(compile_args: true, includes: true),
-        ],
-        install: get_option('installed_tests'),
-        install_dir: installed_test_testdir,
-        include_directories: project_include_directories,
-    )
-    test(
-        test_case,
-        dbus_run_session,
-        args: build_time_dbus_run_session_args + [exe],
-        env: test_env,
-        protocol: 'tap',
-    )
-
-    if get_option('installed_tests')
-        configure_file(
-            input: 'compiled.test.in',
-            output: 'test-' + test_case + '.test',
-            configuration: {
-                'wrapper': ' '.join(installed_wrapper),
-                'program': get_option('prefix') / installed_test_testdir / 'test-' + test_case,
-            },
-            install: true,
-            install_dir: installed_test_metadir,
+if embed_dep.found()
+    foreach test_case : compiled_test_cases
+        exe = executable(
+            'test-' + test_case,
+            test_case + '.c',
+            dependencies: [
+                dbus_dep.partial_dependency(compile_args: true, includes: true),
+                embed_dep,
+            ],
+            install: get_option('installed_tests'),
+            install_dir: installed_test_testdir,
+            include_directories: project_include_directories,
         )
-    endif
-endforeach
+        test(
+            test_case,
+            dbus_run_session,
+            args: build_time_dbus_run_session_args + [exe],
+            env: test_env,
+            protocol: 'tap',
+        )
+
+        if get_option('installed_tests')
+            configure_file(
+                input: 'compiled.test.in',
+                output: 'test-' + test_case + '.test',
+                configuration: {
+                    'wrapper': ' '.join(installed_wrapper),
+                    'program': get_option('prefix') / installed_test_testdir / 'test-' + test_case,
+                },
+                install: true,
+                install_dir: installed_test_metadir,
+            )
+        endif
+    endforeach
+endif
 
 py_test_cases = [
     'client',

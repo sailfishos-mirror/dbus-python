@@ -101,7 +101,7 @@ class Build(Distribution().get_command_class('build')):
                     '-Dpython=' + sys.executable,
                     '-Dpython.platlibdir=' + os.path.join(srcdir, self.build_lib),
                     '-Dpython.purelibdir=' + os.path.join(srcdir, self.build_lib),
-                    '-Dtests=false',
+                    '-Dtests=disabled',
                     srcdir,
                     builddir,
                 ]

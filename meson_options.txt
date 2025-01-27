@@ -32,7 +32,8 @@ option(
 
 option(
   'tests',
-  type: 'boolean',
-  value: true,
+  type: 'feature',
+  value: 'auto',
+  deprecated: {'true': 'auto', 'false': 'disabled'},
   description: 'Enable unit tests',
 )
