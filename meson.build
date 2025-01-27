@@ -229,6 +229,11 @@ dbus_run_session = find_program(
     'dbus-run-session',
     required: get_option('tests'),
 )
+gi_dep = py_mod.find_installation(
+    py.full_path(),
+    modules: ['gi'],
+    required: get_option('tests').enabled(),
+)
 
 if dbus_run_session.found()
     subdir('test')
