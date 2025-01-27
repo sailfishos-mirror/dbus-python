@@ -85,7 +85,7 @@ mkdir _meson-source
 tar -C _meson-source --strip-components=1 -xf _autotools/dbus-python-*.tar.gz
 meson setup \
 	--prefix="$prefix" \
-	-Ddoc=true \
+	-Ddoc=enabled \
 	-Dinstalled_tests=true \
 	-Dpython="${PYTHON:-python3}" \
 	_meson-source _meson-build

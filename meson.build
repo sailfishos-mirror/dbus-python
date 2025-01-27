@@ -7,8 +7,8 @@ project(
     default_options: [
         'warning_level=2',
     ],
-    meson_version: '>=0.56',
-    version: '1.3.3',
+    meson_version: '>=0.60',
+    version: '1.4.0',
 )
 
 pc_mod = import('pkgconfig')
@@ -215,7 +215,13 @@ pc_mod.generate(
     },
 )
 
-if get_option('doc')
+sphinx_dep = py_mod.find_installation(
+    py.full_path(),
+    modules: ['sphinx', 'sphinx_rtd_theme'],
+    required: get_option('doc'),
+)
+
+if sphinx_dep.found()
     subdir('doc')
 endif
 

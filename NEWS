@@ -3,6 +3,8 @@ dbus Python Bindings 1.4.0 (UNRELEASED)
 
 Dependencies:
 
+* Installing from source code using Meson requires Meson 0.60 or later.
+
 * An upstream-supported Python version (currently 3.9 or later) is strongly
   recommended, and a future version of dbus-python is likely to require
   Python 3.9 or later.

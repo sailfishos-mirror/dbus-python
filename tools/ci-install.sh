@@ -121,7 +121,7 @@ case "$ci_distro" in
         esac
 
         case "$ci_suite" in
-            (buster|focal)
+            (buster|focal|bullseye)
                 ninja=ninja==1.10.2.4
                 ;;
 

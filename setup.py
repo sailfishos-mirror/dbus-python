@@ -96,7 +96,7 @@ class Build(Distribution().get_command_class('build')):
                     sys.executable,
                     '-m', 'mesonbuild.mesonmain',
                     '--prefix=' + os.path.join(builddir, 'prefix'),
-                    '-Ddoc=false',
+                    '-Ddoc=disabled',
                     '-Dinstalled_tests=false',
                     '-Dpython=' + sys.executable,
                     '-Dpython.platlibdir=' + os.path.join(srcdir, self.build_lib),
