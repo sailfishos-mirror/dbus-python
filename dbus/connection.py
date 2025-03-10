@@ -109,7 +109,7 @@ class SignalMatch(object):
             self._int_args_match = {}
             self._int_args_paths = {}
             for kwarg in kwargs:
-                match = re.match("arg(\d+)(\w+)?$", kwarg)
+                match = re.match(r"arg(\d+)(\w+)?$", kwarg)
                 if not match:
                     raise TypeError('SignalMatch: unknown keyword argument %s'
                                     % kwarg)
