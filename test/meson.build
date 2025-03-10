@@ -72,7 +72,7 @@ endif
 dbus_run_session = find_program('dbus-run-session', required: true)
 
 build_time_dbus_run_session_args = [
-    '--config-file=@0@'.format(tmp_session_bus_conf),
+    '--config-file', tmp_session_bus_conf,
     '--',
 ]
 
