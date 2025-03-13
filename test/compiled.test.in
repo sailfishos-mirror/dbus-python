@@ -3,3 +3,4 @@
 [Test]
 Type=session
 Exec=@wrapper@  @program@
+Output=TAP

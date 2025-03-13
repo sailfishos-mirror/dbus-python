@@ -14,7 +14,7 @@ project(
 pc_mod = import('pkgconfig')
 py_mod = import('python')
 
-project_include_directories = include_directories('include')
+project_include_directories = include_directories('include', 'dbus_bindings')
 
 cc = meson.get_compiler('c')
 compile_warnings = []

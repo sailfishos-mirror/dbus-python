@@ -8,6 +8,8 @@
 
 #include <Python.h>
 
+#include "dbus_bindings-internal.h"
+
 int main(void)
 {
     int i;
@@ -21,6 +23,11 @@ int main(void)
             return 1;
         }
         Py_Finalize();
+
+#if DBUSPY_PY_VERSION_AT_LEAST(3, 12, 0, 0)
+        puts("ok 1 # SKIP https://gitlab.freedesktop.org/dbus/dbus-python/-/issues/55");
+        return 0;
+#endif
     }
 
     puts("ok 1 - was able to import dbus 100 times");

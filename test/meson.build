@@ -96,15 +96,18 @@ foreach test_case : compiled_test_cases
         test_case + '.c',
         dependencies: [
             py.dependency(embed: true),
+            dbus_dep.partial_dependency(compile_args: true, includes: true),
         ],
         install: get_option('installed_tests'),
         install_dir: installed_test_testdir,
+        include_directories: project_include_directories,
     )
     test(
         test_case,
         dbus_run_session,
         args: build_time_dbus_run_session_args + [exe],
         env: test_env,
+        protocol: 'tap',
     )
 
     if get_option('installed_tests')

@@ -147,8 +147,6 @@ build:python3.12-dbg:
     dbus_ci_system_python_module_suffix: ''
   script: *script
   artifacts: *artifacts
-  # assertion failure in import-repeatedly needs investigating
-  when: manual
 
 build:python3.13:
   stage: build
@@ -168,7 +166,5 @@ build:python3.13-dbg:
     dbus_ci_system_python_module_suffix: ''
   script: *script
   artifacts: *artifacts
-  # assertion failure in import-repeatedly needs investigating
-  when: manual
 
 # vim:set sw=2 sts=2 et:

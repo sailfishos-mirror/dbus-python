@@ -61,6 +61,7 @@ EXTRA_DIST = \
 AM_CPPFLAGS = \
 	-include config.h \
 	-I$(top_srcdir)/include \
+	-I$(top_srcdir)/dbus_bindings \
 	-I$(top_srcdir)/subprojects \
 	-I$(top_srcdir)/subprojects/dbus-gmain \
 	$(DBUS_CFLAGS) \
@@ -279,7 +280,6 @@ test_programs = \
 	$(NULL)
 
 test_test_import_repeatedly_SOURCES = test/import-repeatedly.c
-test_test_import_repeatedly_CPPFLAGS = $(PYTHON_CPPFLAGS)
 test_test_import_repeatedly_LDADD = $(PYTHON_LIBS) $(PYTHON_EXTRA_LIBS)
 test_test_import_repeatedly_LDFLAGS = $(PYTHON_EXTRA_LDFLAGS)
 
