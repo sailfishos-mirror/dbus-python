@@ -75,6 +75,11 @@ assert (_dbus_bindings._python_version & 0xffff0000
 logger.info('dbus found at %r', dbus.__file__)
 logger.info('_dbus_bindings found at %r', _dbus_bindings.__file__)
 
+
+def ignore_cb(*args, **kws):
+    pass
+
+
 def uni(x):
     """Return a Unicode string consisting of the single Unicode character
     with the given codepoint (represented as a surrogate pair if this is
@@ -569,7 +574,6 @@ class TestMatching(unittest.TestCase):
         from dbus.connection import SignalMatch
         self._message = SignalMessage('/', 'a.b', 'c')
         class FakeConn(object): pass
-        def ignore_cb(*args, **kws): pass
         self._match = SignalMatch(FakeConn(), None, '/', None, None, 
                                   ignore_cb, arg0='/')
 
@@ -584,12 +588,12 @@ class TestMatching(unittest.TestCase):
 class TestArg0Namespace(unittest.TestCase):
     def setUp(self):
         self._match = dbus.connection.SignalMatch(object, None, '/', None, None,
-                                  None, arg0namespace='org.freedesktop.dbus-python')
+                                  ignore_cb, arg0namespace='org.freedesktop.dbus-python')
 
     def test_invalid_arg1namespace(self):
         try:
             dbus.connection.SignalMatch(object, None, '/', None, None,
-                                  None, arg1namespace='org.freedesktop.dbus-python')
+                                  ignore_cb, arg1namespace='org.freedesktop.dbus-python')
         except TypeError:
             pass
         else:
@@ -612,7 +616,7 @@ class TestArg0Namespace(unittest.TestCase):
 
     def test_namespace_type_mismatch(self):
         match = dbus.connection.SignalMatch(object, None, '/', None, None,
-                                  None, arg0namespace='1')
+                                  ignore_cb, arg0namespace='1')
         message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
         message.append(1, signature='i')
         self.assertFalse(match.maybe_handle_message(message))
@@ -620,11 +624,12 @@ class TestArg0Namespace(unittest.TestCase):
 class TestPathMatches(unittest.TestCase):
     def setUp(self):
         self._match = dbus.connection.SignalMatch(object, None, '/', None, None,
-                                  None, arg0path='/aa/bb/')
+                                  ignore_cb, arg0path='/aa/bb/')
 
     def test_empty_path(self):
+
         match = dbus.connection.SignalMatch(object, None, '/', None, None,
-                                  None, arg0path='')
+                                  ignore_cb, arg0path='')
         message = _dbus_bindings.SignalMessage('/', 'a.b', 'c')
         message.append('/', signature='s')
         self.assertFalse(match.maybe_handle_message(message))
