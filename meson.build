@@ -238,3 +238,9 @@ gi_dep = py_mod.find_installation(
 if dbus_run_session.found()
     subdir('test')
 endif
+
+meson.add_dist_script(
+    'tools/dist.sh',
+    meson.project_version(),
+    py.full_path(),
+)
