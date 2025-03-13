@@ -150,18 +150,18 @@ build:python3.12-dbg:
 
 build:python3.13:
   stage: build
-  image: "debian:testing-slim"
+  image: "debian:trixie-slim"
   variables:
-    ci_suite: testing
+    ci_suite: trixie
     dbus_ci_system_python: python3.13
   script: *script
   artifacts: *artifacts
 
 build:python3.13-dbg:
   stage: build
-  image: "debian:testing-slim"
+  image: "debian:trixie-slim"
   variables:
-    ci_suite: testing
+    ci_suite: trixie
     dbus_ci_system_python: python3.13-dbg
     dbus_ci_system_python_module_suffix: ''
   script: *script
