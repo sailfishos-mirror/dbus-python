@@ -57,7 +57,10 @@
 #   define USING_DBG 1
 #endif
 
-#if PY_VERSION_HEX < 0x030d00c0
+#define DBUSPY_PY_VERSION_AT_LEAST(x, y, z, w) \
+    (PY_VERSION_HEX >= ((x * 0x01000000) + (y * 0x010000) + (z * 0x0100) + w))
+
+#if !DBUSPY_PY_VERSION_AT_LEAST(3, 13, 0, 0xc0)
 static inline int backport_PyWeakref_GetRef(PyObject *ref, PyObject **pobj)
 {
     PyObject *obj = PyWeakref_GetObject(ref);
