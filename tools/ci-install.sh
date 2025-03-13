@@ -136,7 +136,7 @@ case "$ci_distro" in
         case "$ci_suite:$dbus_ci_system_python" in
             (buster:*|focal:*|bullseye:*|jammy:*)
                 "${dbus_ci_system_python-python3}" -m pip install --user \
-                    pyproject_metadata \
+                    "pyproject_metadata==0.9.0" \
                     tomli \
                     ${NULL}
                 ;;
