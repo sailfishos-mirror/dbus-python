@@ -1,6 +1,12 @@
 dbus Python Bindings 1.4.0 (UNRELEASED)
 =======================================
 
+Dependencies:
+
+* An upstream-supported Python version (currently 3.9 or later) is strongly
+  recommended, and a future version of dbus-python is likely to require
+  Python 3.9 or later.
+
 Enhancements:
 
 * Automatically set the NO_REPLY message flag in call_async if there
@@ -17,9 +23,14 @@ Fixes:
 * Don't require tomllib when generating dist tarball on Python ≥ 3.11
   (dbus-python#54, Timo Gurr)
 
+* Fix compilation with Python ≥ 3.13 in some situations
+  (dbus-python!28, Miro Hrončok)
+
 * Avoid using distutils in setup.py (Simon McVittie)
 
 * Fix a typo in example code (dbus-python!25, Robert Ancell)
+
+* Safer handling of weak references (Simon McVittie)
 
 * CI fixes (Simon McVittie)
 
