@@ -84,6 +84,7 @@ case "$ci_distro" in
             docbook-xml \
             docbook-xsl \
             gcc \
+            git \
             gnome-desktop-testing \
             libdbus-1-dev \
             libglib2.0-dev \
