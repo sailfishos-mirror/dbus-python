@@ -1,4 +1,4 @@
-dbus Python Bindings 1.4.0 (UNRELEASED)
+dbus Python Bindings 1.4.0 (2025-03-13)
 =======================================
 
 Build-time configuration changes:
@@ -11,6 +11,13 @@ Build-time configuration changes:
   may run a subset of tests if some of the prerequisites are missing.
   Use -Dtests=enabled to check for all prerequisites for full test
   coverage, or -Dtests=disabled to avoid building any tests.
+
+* Autotools-generated files are no longer included in the tarball release.
+  The Autotools build system is likely to be removed in a future dbus-python
+  release, so Autotools users should migrate to Meson as soon as possible.
+  It is still possible to build using Autotools, by following the same
+  procedure as for a git clone (starting with the `./autogen.sh` script).
+  This requires autoconf, automake, libtool and autoconf-archive.
 
 Dependencies:
 
@@ -28,6 +35,8 @@ Enhancements:
 * Add arg0namespace match rule support (dbus-python!27, Jeroen Hofstee)
 
 * Add argNpath match rules support (dbus-python!24, Jeroen Hofstee)
+
+* Generate a valid sdist from `meson dist` (Simon McVittie)
 
 * Mention more alternatives to this package in the README (Simon McVittie)
 
