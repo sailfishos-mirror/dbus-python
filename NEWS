@@ -1,6 +1,17 @@
 dbus Python Bindings 1.4.0 (UNRELEASED)
 =======================================
 
+Build-time configuration changes:
+
+* When building with Meson, the doc and tests options are now features.
+  Documentation is still disabled by default: use -Ddoc=enabled to
+  enable it, or -Ddoc=auto to enable it conditionally if the requireds
+  packages are present.
+  Tests are enabled by default if their prerequisites are present, but
+  may run a subset of tests if some of the prerequisites are missing.
+  Use -Dtests=enabled to check for all prerequisites for full test
+  coverage, or -Dtests=disabled to avoid building any tests.
+
 Dependencies:
 
 * Installing from source code using Meson requires Meson 0.60 or later.
