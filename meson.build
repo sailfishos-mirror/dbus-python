@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 project(
-    'dbus-python',
+    'dbus_python',
     'c',
     default_options: [
         'warning_level=2',
