@@ -1,4 +1,4 @@
-# Copyright © 2015-2022 Collabora Ltd.
+# Copyright © 2015-2025 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 #
 # Permission is hereby granted, free of charge, to any person
@@ -49,24 +49,6 @@ variables:
       - _autotools/*.log
       - _meson-build/meson-logs
     when: always
-
-build:python3.7:
-  stage: build
-  image: "debian:buster-slim"
-  variables:
-    ci_suite: buster
-    dbus_ci_system_python: python3
-  script: *script
-  artifacts: *artifacts
-
-build:python3.7-dbg:
-  stage: build
-  image: "debian:buster-slim"
-  variables:
-    ci_suite: buster
-    dbus_ci_system_python: python3-dbg
-  script: *script
-  artifacts: *artifacts
 
 build:python3.9:
   stage: build
