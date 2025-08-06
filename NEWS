@@ -1,7 +1,14 @@
 dbus Python Bindings 1.4.1 (UNRELEASED)
 =======================================
 
-...
+Dependencies:
+
+* Python 3.9 or later is strongly recommended.
+  Older versions are no longer tested or supported.
+
+Fixes:
+
+* CI updates (Simon McVittie)
 
 dbus Python Bindings 1.4.0 (2025-03-13)
 =======================================
