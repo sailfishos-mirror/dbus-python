@@ -52,7 +52,7 @@ variables:
 
 build:python3.9:
   stage: build
-  image: "debian:bullseye-slim"
+  image: "debian/eol:bullseye-slim"
   variables:
     ci_suite: bullseye
     dbus_ci_system_python: python3.9
@@ -61,7 +61,7 @@ build:python3.9:
 
 build:python3.9-dbg:
   stage: build
-  image: "debian:bullseye-slim"
+  image: "debian/eol:bullseye-slim"
   variables:
     ci_suite: bullseye
     dbus_ci_system_python: python3.9-dbg
