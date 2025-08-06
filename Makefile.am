@@ -5,6 +5,7 @@ abs_top_srcdir = @abs_top_srcdir@
 abs_top_builddir = @abs_top_builddir@
 installed_testdir = ${libexecdir}/installed-tests/${PACKAGE_TARNAME}
 installed_test_testdir = ${installed_testdir}/test
+installed_test_servicedir = ${installed_testdir}/test/services
 installed_test_metadir = ${datadir}/installed-tests/${PACKAGE_TARNAME}
 
 AM_DISTCHECK_CONFIGURE_FLAGS = PYTHON=$(PYTHON) --with-python-prefix='$${prefix}' --with-python-exec-prefix='$${exec_prefix}'
@@ -42,12 +43,13 @@ EXTRA_DIST = \
 	pyproject.toml \
 	setup.cfg \
 	setup.py \
-	test/TestSuitePythonService.service.in \
 	test/compiled.test.in \
 	test/installable/meson.build \
 	test/meson.build \
 	test/py.test.in \
 	test/sh.test.in \
+	test/services/TestSuitePythonService.service.in \
+	test/services/meson.build \
 	test/tmp-session-bus.conf.in \
 	tools/check-c-style.sh \
 	tools/check-coding-style.mk \
@@ -291,16 +293,20 @@ TESTS = \
 	$(NULL)
 
 noinst_DATA = \
-	test/TestSuitePythonService.service \
+	test/services/TestSuitePythonService.service \
 	test/tmp-session-bus.conf \
 	$(NULL)
 CLEANFILES += $(noinst_DATA)
 
 installed_test_test_data = \
-	test/installable/TestSuitePythonService.service \
 	test/installable/tmp-session-bus.conf \
 	$(NULL)
 CLEANFILES += $(installed_test_test_data)
+
+installed_test_service_data = \
+	test/installable/services/TestSuitePythonService.service \
+	$(NULL)
+CLEANFILES += $(installed_test_service_data)
 
 $(noinst_DATA): test/%: test/%.in
 	@$(MKDIR_P) $(dir $@)
@@ -313,9 +319,14 @@ $(noinst_DATA): test/%: test/%.in
 $(installed_test_test_data): test/installable/%: test/%.in
 	@$(MKDIR_P) $(dir $@)
 	$(AM_V_GEN)$(SED) \
+		-e 's|[@]G_TEST_BUILDDIR[@]|$(installed_testdir)|g' \
+		$< > $@
+
+$(installed_test_service_data): test/installable/%: test/%.in
+	@$(MKDIR_P) $(dir $@)
+	$(AM_V_GEN)$(SED) \
 		-e 's|[@]PYTHON[@]|$(PYTHON)|g' \
 		-e 's|[@]G_TEST_SRCDIR[@]|$(installed_testdir)|g' \
-		-e 's|[@]G_TEST_BUILDDIR[@]|$(installed_testdir)|g' \
 		$< > $@
 
 if ENABLE_INSTALLED_TESTS
@@ -329,6 +340,7 @@ nobase_dist_installed_test_PYTHON = \
 	$(dist_test_extra_python) \
 	$(NULL)
 installed_test_test_DATA = $(installed_test_test_data)
+installed_test_service_DATA = $(installed_test_service_data)
 installed_test_meta_DATA = $(installed_test_metadata)
 else
 noinst_PROGRAMS = $(test_programs)

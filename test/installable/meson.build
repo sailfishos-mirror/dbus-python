@@ -9,11 +9,11 @@ installed_test_config = {
 }
 
 configure_file(
-    input: '../TestSuitePythonService.service.in',
+    input: '../services/TestSuitePythonService.service.in',
     output: 'TestSuitePythonService.service',
     configuration: installed_test_config,
     install: true,
-    install_dir: installed_test_testdir,
+    install_dir: installed_test_testdir / 'services',
 )
 
 configure_file(
