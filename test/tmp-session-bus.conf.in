@@ -4,7 +4,7 @@
 <busconfig>
   <!-- Our well-known bus type, don't change this -->
   <type>session</type>
-  <listen>unix:tmpdir=/tmp</listen>
+  <listen>unix:tmpdir=@DBUS_TEST_SOCKET_DIR@</listen>
 
   <servicedir>@G_TEST_BUILDDIR@/test/services</servicedir>
 

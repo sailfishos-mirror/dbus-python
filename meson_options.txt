@@ -37,3 +37,10 @@ option(
   deprecated: {'true': 'auto', 'false': 'disabled'},
   description: 'Enable unit tests',
 )
+
+option(
+  'test_socket_dir',
+  type: 'string',
+  value: '/tmp',
+  description: 'Where to put sockets for automated tests'
+)
