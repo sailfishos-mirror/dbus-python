@@ -110,6 +110,15 @@ class TestDBusBindings(unittest.TestCase):
         del bus
         self.assertTrue(ref() is None)
 
+    def testWeakRefsWithExportedObject(self):
+        # regression test: destroying an object on a connection should not
+        # raise AssertionError if Connection weakref is cleared during dealloc
+        address = os.environ['DBUS_SESSION_BUS_ADDRESS']
+        conn = _dbus_bindings.Connection(address)
+        obj = dbus.service.Object(conn, '/test/path')
+        del obj
+        del conn
+
     def testWeakRefsToBaseConnection(self):
         # regression test, using Py_TPFLAGS_MANAGED_WEAKREF without
         # Py_TPFLAGS_HAVE_GC produced invalid memory accesses, this test should
