@@ -8,7 +8,7 @@ project(
         'warning_level=2',
     ],
     meson_version: '>=0.60',
-    version: '1.4.1',
+    version: '1.4.99',
 )
 
 pc_mod = import('pkgconfig')

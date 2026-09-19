@@ -1,14 +1,44 @@
-dbus Python Bindings 1.4.1 (UNRELEASED)
+dbus Python Bindings 1.5.0 (UNRELEASED)
 =======================================
 
 Dependencies:
 
+* The Meson build system is required.
+
+* Python 3.7 or later is required.
+
 * Python 3.9 or later is strongly recommended.
   Older versions are no longer tested or supported.
 
+Build system changes:
+
+* The source release filename is dbus_python, not dbus-python,
+  matching the project's name on PyPI and PEP-0625
+
+* The Autotools build system is no longer available
+
+Enhancements:
+
+* Add a `test_socket_dir` option for systems where /tmp is not available
+  (dbus-python!38, Emily)
+
 Fixes:
 
+* Revert a broken implementation of weak references that caused crashes,
+  especially in Python 3.15
+  (regression in 1.4.0; dbus-python#59, Simon McVittie)
+
+* Avoid repeated configuration reloads during unit testing when dbus was
+  compiled with kqueue (dbus-python#56, Jakub Kulík)
+
 * CI updates (Simon McVittie)
+
+Licensing:
+
+* REUSE metadata is now in TOML format
+
+* After the removal of the Autotools build system,
+  all remaining files outside subprojects/ are believed to be MIT-licensed
 
 dbus Python Bindings 1.4.0 (2025-03-13)
 =======================================
