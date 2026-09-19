@@ -19,8 +19,8 @@ Build system changes:
 
 Enhancements:
 
-* Add a `test_socket_dir` option for systems where /tmp is not available
-  (dbus-python!38, Emily)
+* Add a `test_socket_dir` build-time option for systems where /tmp is not
+  available (dbus-python!38, Emily)
 
 Fixes:
 
@@ -47,7 +47,7 @@ Build-time configuration changes:
 
 * When building with Meson, the doc and tests options are now features.
   Documentation is still disabled by default: use -Ddoc=enabled to
-  enable it, or -Ddoc=auto to enable it conditionally if the requireds
+  enable it, or -Ddoc=auto to enable it conditionally if the required
   packages are present.
   Tests are enabled by default if their prerequisites are present, but
   may run a subset of tests if some of the prerequisites are missing.
