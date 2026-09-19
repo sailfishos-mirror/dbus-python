@@ -314,12 +314,14 @@ $(noinst_DATA): test/%: test/%.in
 		-e 's|[@]PYTHON[@]|$(PYTHON)|g' \
 		-e 's|[@]G_TEST_SRCDIR[@]|$(abs_top_srcdir)|g' \
 		-e 's|[@]G_TEST_BUILDDIR[@]|$(abs_top_builddir)|g' \
+		-e 's|[@]DBUS_TEST_SOCKET_DIR[@]|/tmp|g' \
 		$< > $@
 
 $(installed_test_test_data): test/installable/%: test/%.in
 	@$(MKDIR_P) $(dir $@)
 	$(AM_V_GEN)$(SED) \
 		-e 's|[@]G_TEST_BUILDDIR[@]|$(installed_testdir)|g' \
+		-e 's|[@]DBUS_TEST_SOCKET_DIR[@]|/tmp|g' \
 		$< > $@
 
 $(installed_test_service_data): test/installable/%: test/%.in

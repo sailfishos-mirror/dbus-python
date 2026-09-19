@@ -99,7 +99,7 @@ meson setup \
 	-Dpython="${PYTHON:-python3}" \
 	_meson-source _meson-build
 meson compile -C _meson-build
-meson test -C _meson-build
+meson test -C _meson-build --print-errorlogs
 rm -fr "$prefix"
 meson install -C _meson-build
 ( cd "$prefix" && find . -ls )
