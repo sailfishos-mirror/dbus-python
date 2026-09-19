@@ -10,7 +10,7 @@ Files:
  NEWS
  README
  doc/*
- test/TestSuitePythonService.service.in
+ test/services/TestSuitePythonService.service.in
  test/tmp-session-bus.conf.in
 Copyright:
  2006-2022 Collabora Ltd.
