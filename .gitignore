@@ -57,6 +57,7 @@
 /missing
 /py-compile
 /stamp-h1
+/subprojects/.wraplock
 /test-suite.log
 /test/*.test
 /test/*.trs
