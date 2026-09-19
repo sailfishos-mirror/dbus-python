@@ -74,13 +74,8 @@ case "$ci_distro" in
         $sudo apt-get -qq -y update
 
         $sudo apt-get -qq -y install --no-install-recommends \
-            autoconf \
-            autoconf-archive \
-            automake \
-            autotools-dev \
             ccache \
             debhelper \
-            dh-autoreconf \
             docbook-xml \
             docbook-xsl \
             gcc \
@@ -88,7 +83,6 @@ case "$ci_distro" in
             gnome-desktop-testing \
             libdbus-1-dev \
             libglib2.0-dev \
-            libtool \
             make \
             ninja-build \
             sudo \

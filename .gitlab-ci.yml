@@ -46,7 +46,6 @@ variables:
     - env PATH="$HOME/.local/bin:/usr/lib/ccache:$PATH" ./tools/ci-build.sh $dbus_ci_configure_flags
   artifacts: &artifacts
     paths:
-      - _autotools/*.log
       - _meson-build/meson-logs
     when: always
 

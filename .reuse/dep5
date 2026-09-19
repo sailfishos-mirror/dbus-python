@@ -18,14 +18,3 @@ Copyright:
  2012 Barry Warsaw
  2008-2019 Wayland contributors
 License: MIT
-
-Files: m4/ax_python_devel.m4
-Copyright:
- 2009 Sebastian Huber
- 2009 Alan W. Irwin
- 2009 Rafael Laboissiere
- 2009 Andrew Collier
- 2009 Matteo Settenvini
- 2009 Horst Knorr
- 2013 Daniel Mullner
-License: GPL-3.0-or-later WITH LicenseRef-AutoconfArchiveException
