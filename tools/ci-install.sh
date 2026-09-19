@@ -66,6 +66,24 @@ if [ -n "${dbus_ci_system_python-}" ]; then
     fi
 fi
 
+case "$ci_distro:$ci_suite" in
+    (debian:bullseye)
+        # Workaround for https://bugs.debian.org/1147093
+        # Ideally we'd use archive.debian.org,
+        # but we can't do that until https://bugs.debian.org/1147150
+        # is solved
+        sed -i -e '/bullseye-security/d' /etc/apt/sources.list
+        echo "deb" \
+            "[" \
+            "signed-by=/usr/share/keyrings/debian-archive-keyring.gpg" \
+            "check-valid-until=no" \
+            "]" \
+            "http://snapshot.debian.org/archive/debian-security/20260903T220410Z" \
+            "bullseye-security main" \
+            >> /etc/apt/sources.list.d/bullseye-security.list
+        ;;
+esac
+
 case "$ci_distro" in
     (debian|ubuntu)
         # Don't ask questions, just do it
