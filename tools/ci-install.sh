@@ -71,9 +71,9 @@ case "$ci_distro" in
         # Don't ask questions, just do it
         sudo="$sudo env DEBIAN_FRONTEND=noninteractive"
 
-        $sudo apt-get -qq -y update
+        $sudo apt-get -y update
 
-        $sudo apt-get -qq -y install --no-install-recommends \
+        $sudo apt-get -y install --no-install-recommends \
             ccache \
             debhelper \
             docbook-xml \
@@ -92,7 +92,7 @@ case "$ci_distro" in
             ${NULL}
 
         if [ -n "${dbus_ci_system_python-}" ]; then
-              $sudo apt-get -qq -y install \
+              $sudo apt-get -y install \
                 ${dbus_ci_system_python} \
                 ${dbus_ci_system_python%-dbg}-dev \
                 python3-docutils \
@@ -107,11 +107,11 @@ case "$ci_distro" in
 
         case "$ci_suite" in
             (buster|focal|bullseye)
-                $sudo apt-get -qq -y install dbus
+                $sudo apt-get -y install dbus
                 ;;
 
             (*)
-                $sudo apt-get -qq -y install dbus-daemon
+                $sudo apt-get -y install dbus-daemon
                 ;;
         esac
 
@@ -121,7 +121,7 @@ case "$ci_distro" in
                 ;;
 
             (*)
-                $sudo apt-get -qq -y install meson
+                $sudo apt-get -y install meson
                 ninja=ninja
                 have_system_meson=true
                 ;;
@@ -137,7 +137,7 @@ case "$ci_distro" in
                 ;;
 
             (*)
-                $sudo apt-get -qq -y install \
+                $sudo apt-get -y install \
                     python3-pyproject-metadata \
                     ${NULL}
                 ;;
