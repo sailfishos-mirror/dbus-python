@@ -47,4 +47,4 @@ test = [
 homepage = 'http://www.freedesktop.org/wiki/Software/DBusBindings/#python'
 download = 'http://dbus.freedesktop.org/releases/dbus-python/'
 source = 'https://gitlab.freedesktop.org/dbus/dbus-python/'
-tracker = 'https://gitlab.freedesktop.org/dbus/dbus-python/-/issues'
+tracker = 'https://gitlab.freedesktop.org/dbus/dbus-python/-/work_items'
