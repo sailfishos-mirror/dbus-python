@@ -1,6 +1,5 @@
 version = 1
 SPDX-PackageName = "dbus-python"
-SPDX-PackageSupplier = "https://gitlab.freedesktop.org/dbus/dbus-python/-/issues"
 SPDX-PackageDownloadLocation = "https://gitlab.freedesktop.org/dbus/dbus-python"
 
 [[annotations]]
