@@ -1,6 +1,7 @@
 version = 1
 SPDX-PackageName = "dbus-python"
-SPDX-PackageDownloadLocation = "https://gitlab.freedesktop.org/dbus/dbus-python"
+SPDX-PackageHomePage = "https://gitlab.freedesktop.org/dbus/dbus-python"
+SPDX-PackageDownloadLocation = "git+https://gitlab.freedesktop.org/dbus/dbus-python.git"
 
 [[annotations]]
 path = [
