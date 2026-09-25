@@ -167,22 +167,19 @@ so you should have an issue number or a merge request ID to refer to.
 #### Pre-release steps
 
 * Make sure CI (currently Gitlab-CI) is passing
-* Update `NEWS` and the version numbers in **both** `configure.ac`
-  and `meson.build`, and commit them
+* Update `NEWS` and the version number in `meson.build`, and commit them
 
 #### Building and uploading the release
 
-If `${builddir}` is the path to a build directory and `${version}`
-is the new version:
-
 ```
-make -C ${builddir} distcheck
+python3 -m build --sdist -xn .
 # do any final testing here, e.g. updating the Debian package
 git tag -m dbus-python-${version} -s dbus-python-${version}
-gpg --detach-sign -a ${builddir}/dbus-python-${version}.tar.gz
-make -C ${builddir} maintainer-upload
-make -C ${builddir} maintainer-update-website
-twine upload ${builddir}/dbus-python-${version}.tar.gz{,.asc}
+gpg --detach-sign -a dist/dbus-python-${version}.tar.gz
+rsync -tvpP --chmod=ugo=r dist/dbus-python-${version}.tar.gz{,.asc} \
+    dbus.freedesktop.org:/srv/dbus.freedesktop.org/www/releases/dbus-python/
+ninja -C ${builddir} maintainer-update-website
+twine upload dist/dbus-python-${version}.tar.gz
 ```
 
 #### Post-release steps
