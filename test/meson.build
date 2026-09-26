@@ -36,6 +36,7 @@ dbus_py_test = py.extension_module(
     include_directories: project_include_directories,
     install: get_option('installed_tests'),
     install_dir: installed_test_testdir,
+    install_tag: 'tests',
 )
 
 build_time_test_config = {
@@ -65,6 +66,7 @@ if get_option('installed_tests')
         'test-service.py',
         'wait-for-name.py',
         install_dir: installed_test_testdir,
+        install_tag: 'tests',
     )
 endif
 
@@ -99,6 +101,7 @@ if embed_dep.found()
             ],
             install: get_option('installed_tests'),
             install_dir: installed_test_testdir,
+            install_tag: 'tests',
             include_directories: project_include_directories,
         )
         test(
@@ -119,6 +122,7 @@ if embed_dep.found()
                 },
                 install: true,
                 install_dir: installed_test_metadir,
+                install_tag: 'tests',
             )
         endif
     endforeach
@@ -157,6 +161,7 @@ foreach test_case : py_test_cases
             },
             install: true,
             install_dir: installed_test_metadir,
+            install_tag: 'tests',
         )
     endif
 endforeach
@@ -182,6 +187,7 @@ foreach test_case : sh_test_cases
             },
             install: true,
             install_dir: installed_test_metadir,
+            install_tag: 'tests',
         )
     endif
 endforeach
@@ -190,5 +196,6 @@ if get_option('installed_tests')
     install_data(
         install_test_sources,
         install_dir: installed_test_testdir,
+        install_tag: 'tests',
     )
 endif

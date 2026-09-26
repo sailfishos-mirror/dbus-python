@@ -15,6 +15,7 @@ configure_file(
     configuration: installed_test_config,
     install: true,
     install_dir: installed_test_testdir / 'services',
+    install_tag: 'tests',
 )
 
 configure_file(
@@ -23,4 +24,5 @@ configure_file(
     configuration: installed_test_config,
     install: true,
     install_dir: installed_test_testdir,
+    install_tag: 'tests',
 )
