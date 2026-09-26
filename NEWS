@@ -12,7 +12,8 @@ Dependencies:
 
 Build system changes:
 
-* The source release filename is dbus_python, not dbus-python,
+* The source release is now built as a sdist using mesonpy,
+  with a name that includes dbus_python, not dbus-python,
   matching the project's name on PyPI and PEP-0625
 
 * The Autotools build system is no longer available
@@ -30,6 +31,11 @@ Fixes:
 
 * Avoid repeated configuration reloads during unit testing when dbus was
   compiled with kqueue (dbus-python#56, Jakub Kulík)
+
+* Add some unit tests for weak references and object destruction
+  (dbus-python#59, Maximiliano Curia)
+
+* Metadata updates (Simon McVittie)
 
 * CI updates (Simon McVittie)
 
