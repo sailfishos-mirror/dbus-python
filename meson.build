@@ -176,9 +176,6 @@ dbus_bindings = py.extension_module(
     ],
     include_directories: project_include_directories,
     install: true,
-    # Workaround for https://github.com/mesonbuild/meson/issues/6331
-    # TODO: Remove this when we depend on Meson 0.60
-    subdir: '',
 )
 
 dbus_glib_bindings = py.extension_module(
@@ -193,9 +190,6 @@ dbus_glib_bindings = py.extension_module(
     ],
     include_directories: project_include_directories,
     install: true,
-    # Workaround for https://github.com/mesonbuild/meson/issues/6331
-    # TODO: Remove this when we depend on Meson 0.60
-    subdir: '',
 )
 
 install_headers(
