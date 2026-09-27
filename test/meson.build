@@ -1,7 +1,7 @@
 # Copyright 2022 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 
-installed_testdir = get_option('libexecdir') / 'installed-tests' / meson.project_name() / get_option('installed_tests_subdir')
+installed_testdir = py.get_install_dir(pure: false) / 'dbus' / 'installed-tests'
 installed_test_testdir = installed_testdir / 'test'
 installed_test_metadir = get_option('datadir') / 'installed-tests' / meson.project_name() / get_option('installed_tests_subdir')
 
