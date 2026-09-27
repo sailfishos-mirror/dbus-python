@@ -60,6 +60,7 @@ class Build(Distribution().get_command_class('build')):
             [
                 sys.executable,
                 '-m', 'mesonbuild.mesonmain',
+                'setup',
                 '--prefix=' + os.path.join(builddir, 'prefix'),
                 '-Ddoc=disabled',
                 '-Dinstalled_tests=false',
