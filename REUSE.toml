@@ -6,7 +6,6 @@ SPDX-PackageDownloadLocation = "git+https://gitlab.freedesktop.org/dbus/dbus-pyt
 [[annotations]]
 path = [
   "AUTHORS",
-  "ChangeLog",
   "CONTRIBUTING.md",
   "NEWS",
   "README",
