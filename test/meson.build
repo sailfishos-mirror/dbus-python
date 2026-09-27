@@ -76,15 +76,15 @@ build_time_dbus_run_session_args = [
 ]
 
 installed_wrapper = [
+    'env',
+    'PYTHON=' + py.full_path(),
+    'DBUS_TOP_SRCDIR=' + (get_option('prefix') / installed_testdir),
+    'DBUS_TOP_BUILDDIR=' + (get_option('prefix') / installed_testdir),
     dbus_run_session.full_path(),
     '--config-file=@0@'.format(
         get_option('prefix') / installed_test_testdir / 'tmp-session-bus.conf'
     ),
     '--',
-    'env',
-    'PYTHON=' + py.full_path(),
-    'DBUS_TOP_SRCDIR=' + (get_option('prefix') / installed_testdir),
-    'DBUS_TOP_BUILDDIR=' + (get_option('prefix') / installed_testdir),
 ]
 
 compiled_test_cases = ['import-repeatedly']
@@ -92,8 +92,9 @@ embed_dep = py.dependency(embed: true, required: get_option('tests'))
 
 if embed_dep.found()
     foreach test_case : compiled_test_cases
+        exe_name = 'test-' + test_case + '-' + py.language_version()
         exe = executable(
-            'test-' + test_case,
+            exe_name,
             test_case + '.c',
             dependencies: [
                 dbus_dep.partial_dependency(compile_args: true, includes: true),
@@ -118,7 +119,7 @@ if embed_dep.found()
                 output: 'test-' + test_case + '.test',
                 configuration: {
                     'wrapper': ' '.join(installed_wrapper),
-                    'program': get_option('prefix') / installed_test_testdir / 'test-' + test_case,
+                    'program': get_option('prefix') / installed_test_testdir / exe_name,
                 },
                 install: true,
                 install_dir: installed_test_metadir,
