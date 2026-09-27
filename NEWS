@@ -4,6 +4,8 @@ dbus Python Bindings 1.5.0 (UNRELEASED)
 Dependencies:
 
 * The Meson build system is required.
+  Installation via `pip` and similar PEP-0517 build system frontends
+  requires meson-python (mesonpy) and its dependencies.
 
 * Python 3.7 or later is required.
 
@@ -22,6 +24,9 @@ Enhancements:
 
 * Add a `test_socket_dir` build-time option for systems where /tmp is not
   available (dbus-python!38, Emily)
+
+* Documentation and "as-installed" tests (if enabled) are associated with
+  `meson install --tags=doc` and `--tags=tests` respectively (Simon McVittie)
 
 Fixes:
 
