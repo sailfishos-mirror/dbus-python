@@ -175,11 +175,11 @@ so you should have an issue number or a merge request ID to refer to.
 python3 -m build --sdist -xn .
 # do any final testing here, e.g. updating the Debian package
 git tag -m dbus-python-${version} -s dbus-python-${version}
-gpg --detach-sign -a dist/dbus-python-${version}.tar.gz
-rsync -tvpP --chmod=ugo=r dist/dbus-python-${version}.tar.gz{,.asc} \
+gpg --detach-sign -a dist/dbus_python-${version}.tar.gz
+rsync -tvpP --chmod=ugo=r dist/dbus_python-${version}.tar.gz{,.asc} \
     dbus.freedesktop.org:/srv/dbus.freedesktop.org/www/releases/dbus-python/
 ninja -C ${builddir} maintainer-update-website
-twine upload dist/dbus-python-${version}.tar.gz
+twine upload dist/dbus_python-${version}.tar.gz
 ```
 
 #### Post-release steps
