@@ -1,4 +1,4 @@
-# Copyright 2022 Collabora Ltd.
+# Copyright 2022-2026 Collabora Ltd.
 # SPDX-License-Identifier: MIT
 
 project(
@@ -8,7 +8,7 @@ project(
         'warning_level=2',
     ],
     meson_version: '>=0.60',
-    version: '1.4.99',
+    version: '1.5.0',
 )
 
 pc_mod = import('pkgconfig')
